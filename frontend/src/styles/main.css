@@ -1,0 +1,325 @@
+a:hover>code, code>a:hover {
+	text-decoration: underline;
+}
+
+body {
+	padding-top: 48px;
+	overflow-y: overlay;
+}
+
+code {
+	background-color: rgba(0, 0, 0, .08);
+	border-radius: 3px;
+	display: inline-block;
+	font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+	font-size: .857142857rem;
+	padding: 1px 4px;
+}
+
+pre>code {
+	background-color: inherit;
+	border-radius: 0;
+	padding: 0;
+}
+
+textarea {
+	font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+tr.list-loading.list-loading.list-loading.list-loading.list-loading {
+	background: transparent !important;
+	height: 4.5rem;
+}
+
+tr.list-loading>td {
+	position: relative;
+}
+
+.field-hint {
+	font-size: .92857143rem;
+	padding-top: 4px;
+}
+
+.h-captcha.iframe {
+	line-height: 0;
+}
+
+.jk:target {
+	margin-top: -50px;
+	padding-top: 50px;
+}
+
+.no-left-padding {
+	padding-left: 0 !important;
+}
+
+.no-right-padding {
+	padding-right: 0 !important;
+}
+
+.ui.basic.modal .ui.ui.ui.checkbox label {
+	color: #fff !important;
+}
+
+.ui.form textarea.tiny {
+	height: 7em;
+	min-height: 6em;
+	max-height: 12em;
+}
+
+.ui.form textarea.small {
+	min-height: 6em;
+	max-height: 18em;
+}
+
+.ui.form .error.error input:-webkit-autofill {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	border-color: rgb(34, 36, 38, .15) !important;
+}
+
+.ui.form .field.field input:-webkit-autofill {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	border-color: rgb(34, 36, 38, .15) !important;
+}
+
+.ui.form .field.field input:-webkit-autofill:focus {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	border-color: rgb(34, 36, 38, .15) !important;
+}
+
+.ui.main.container {
+	padding-top: 24px;
+	padding-bottom: 16px;
+}
+
+.ui.modal .actions>.checkbox {
+	margin-right: 1.5rem;
+}
+
+.ui.modal>.close {
+	top: 1.0535rem;
+	right: 1rem;
+	color: rgba(0, 0, 0, .87);
+}
+
+.ui.no-shadow.segment {
+	-webkit-box-shadow: none;
+			box-shadow: none;
+}
+
+.ui.numbered-item.table>tbody>tr.disabled>td,
+.ui.numbered-item.table>tbody>tr.disabled:hover>td {
+	pointer-events: auto;
+}
+
+.ui.numbered-item.table>tbody>tr>td.none {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.ui.outcome.message {
+	display: none;
+}
+
+.ui.pagination.menu .active.item[contenteditable] {
+	-moz-user-modify: read-write-plaintext-only;
+	-webkit-user-modify: read-write-plaintext-only;
+}
+
+.ui.pink.statistics .statistic>.label {
+	color: #e03997;
+}
+
+.ui.size-16-5.header {
+	font-size: 1.17857143rem;
+}
+
+.ui.statistics .statistic>.label, .ui.statistic>.label {
+	text-transform: none;
+}
+
+.ui.success.outcome.message,
+.ui.warning.outcome.message,
+.ui.error.outcome.message {
+	display: block;
+}
+
+.xhya {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+@media only screen and (min-width: 768px) {
+	.ui.form label.padding-label {
+		min-height: 1.5rem;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.ui.easily-stackable.grid {
+		width: auto;
+		margin-left: 0em !important;
+		margin-right: 0em !important;
+	}
+
+	.ui.easily-stackable.grid>.row>.wide.column,
+	.ui.easily-stackable.grid>.wide.column,
+	.ui.easily-stackable.grid>.column.grid>.column,
+	.ui.easily-stackable.grid>.column.row>.column,
+	.ui.easily-stackable.grid>.row>.column,
+	.ui.easily-stackable.grid>.column:not(.row),
+	.ui.grid>.easily-stackable.easily-stackable.row>.column {
+		width: 100% !important;
+		margin: 0em 0em !important;
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
+		padding: 1rem 1rem !important;
+	}
+
+	.ui.easily-stackable.grid:not(.vertically)>.row {
+		margin: 0em;
+		padding: 0em;
+	}
+
+	/* Coupling */
+
+	.ui.container>.ui.easily-stackable.grid>.column,
+	.ui.container>.ui.easily-stackable.grid>.row>.column {
+		padding-left: 0em !important;
+		padding-right: 0em !important;
+	}
+
+	/* Don't pad inside segment or nested grid */
+
+	.ui.grid .ui.easily-stackable.grid,
+	.ui.segment:not(.vertical) .ui.easily-stackable.page.grid {
+		margin-left: -1rem !important;
+		margin-right: -1rem !important;
+	}
+
+	/* Divided Stackable */
+
+	.ui.easily-stackable.divided.grid>.row:first-child>.column:first-child,
+	.ui.easily-stackable.celled.grid>.row:first-child>.column:first-child,
+	.ui.easily-stackable.divided.grid>.column:not(.row):first-child,
+	.ui.easily-stackable.celled.grid>.column:not(.row):first-child {
+		border-top: none !important;
+	}
+
+	.ui.inverted.easily-stackable.celled.grid>.column:not(.row),
+	.ui.inverted.easily-stackable.divided.grid>.column:not(.row),
+	.ui.inverted.easily-stackable.celled.grid>.row>.column,
+	.ui.inverted.easily-stackable.divided.grid>.row>.column {
+		border-top: 1px solid rgba(255, 255, 255, .1);
+	}
+
+	.ui.easily-stackable.celled.grid>.column:not(.row),
+	.ui.easily-stackable.divided:not(.vertically).grid>.column:not(.row),
+	.ui.easily-stackable.celled.grid>.row>.column,
+	.ui.easily-stackable.divided:not(.vertically).grid>.row>.column {
+		border-top: 1px solid rgba(34, 36, 38, .15);
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
+		padding-top: 2rem !important;
+		padding-bottom: 2rem !important;
+	}
+
+	.ui.easily-stackable.celled.grid>.row {
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
+	}
+
+	.ui.easily-stackable.divided:not(.vertically).grid>.column:not(.row),
+	.ui.easily-stackable.divided:not(.vertically).grid>.row>.column {
+		padding-left: 0em !important;
+		padding-right: 0em !important;
+	}
+}
+
+@media only screen and (max-width: 1199px) {
+	.ui.very-easily-stackable.grid {
+		width: auto;
+		margin-left: 0em !important;
+		margin-right: 0em !important;
+	}
+
+	.ui.very-easily-stackable.grid>.row>.wide.column,
+	.ui.very-easily-stackable.grid>.wide.column,
+	.ui.very-easily-stackable.grid>.column.grid>.column,
+	.ui.very-easily-stackable.grid>.column.row>.column,
+	.ui.very-easily-stackable.grid>.row>.column,
+	.ui.very-easily-stackable.grid>.column:not(.row),
+	.ui.grid>.very-easily-stackable.very-easily-stackable.row>.column {
+		width: 100% !important;
+		margin: 0em 0em !important;
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
+		padding: 1rem 1rem !important;
+	}
+
+	.ui.very-easily-stackable.grid:not(.vertically)>.row {
+		margin: 0em;
+		padding: 0em;
+	}
+
+	/* Coupling */
+
+	.ui.container>.ui.very-easily-stackable.grid>.column,
+	.ui.container>.ui.very-easily-stackable.grid>.row>.column {
+		padding-left: 0em !important;
+		padding-right: 0em !important;
+	}
+
+	/* Don't pad inside segment or nested grid */
+
+	.ui.grid .ui.very-easily-stackable.grid,
+	.ui.segment:not(.vertical) .ui.very-easily-stackable.page.grid {
+		margin-left: -1rem !important;
+		margin-right: -1rem !important;
+	}
+
+	/* Divided Stackable */
+
+	.ui.very-easily-stackable.divided.grid>.row:first-child>.column:first-child,
+	.ui.very-easily-stackable.celled.grid>.row:first-child>.column:first-child,
+	.ui.very-easily-stackable.divided.grid>.column:not(.row):first-child,
+	.ui.very-easily-stackable.celled.grid>.column:not(.row):first-child {
+		border-top: none !important;
+	}
+
+	.ui.inverted.very-easily-stackable.celled.grid>.column:not(.row),
+	.ui.inverted.very-easily-stackable.divided.grid>.column:not(.row),
+	.ui.inverted.very-easily-stackable.celled.grid>.row>.column,
+	.ui.inverted.very-easily-stackable.divided.grid>.row>.column {
+		border-top: 1px solid rgba(255, 255, 255, .1);
+	}
+
+	.ui.very-easily-stackable.celled.grid>.column:not(.row),
+	.ui.very-easily-stackable.divided:not(.vertically).grid>.column:not(.row),
+	.ui.very-easily-stackable.celled.grid>.row>.column,
+	.ui.very-easily-stackable.divided:not(.vertically).grid>.row>.column {
+		border-top: 1px solid rgba(34, 36, 38, .15);
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
+		padding-top: 2rem !important;
+		padding-bottom: 2rem !important;
+	}
+
+	.ui.very-easily-stackable.celled.grid>.row {
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
+	}
+
+	.ui.very-easily-stackable.divided:not(.vertically).grid>.column:not(.row),
+	.ui.very-easily-stackable.divided:not(.vertically).grid>.row>.column {
+		padding-left: 0em !important;
+		padding-right: 0em !important;
+	}
+
+	.very-easily-lose-padding-top.very-easily-lose-padding-top.very-easily-lose-padding-top.very-easily-lose-padding-top.very-easily-lose-padding-top.very-easily-lose-padding-top.very-easily-lose-padding-top.very-easily-lose-padding-top {
+		padding-top: 0 !important;
+	}
+}

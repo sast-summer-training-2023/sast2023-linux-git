@@ -1,0 +1,136 @@
+[
+	{
+		"name": "`chmod` & `tmux`",
+		"flag": "1",
+		"score": 0,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "Environment",
+		"flag": "2",
+		"score": 0,
+		"category": "Linux",
+		"comment": "(redirection, ulimit)"
+	},
+	{
+		"name": "Text Process",
+		"flag": "3",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "Archives",
+		"flag": "4",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "`find`",
+		"flag": "5",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "`file`",
+		"flag": "6",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "Globs",
+		"flag": "7",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "Homeless",
+		"flag": "8",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "Heredoc",
+		"flag": "9",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "Proxies",
+		"flag": "10",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "TUNA",
+		"flag": "11",
+		"score": 1,
+		"category": "Linux",
+		"comment": ""
+	},
+	{
+		"name": "Culprit",
+		"flag": "git-BLAME_is_USEFUL_to_find_the_CULPRIT",
+		"score": 1,
+		"category": "Git",
+		"comment": ""
+	},
+	{
+		"name": "Bonus 1",
+		"flag": "c7w&abmfy&cmh&icera_tql",
+		"score": 1,
+		"category": "Bonus",
+		"comment": "根据去年的经验（雾），将 file 任务中所得的图像文件通过 scp 拷贝到本地，观察图片 (表情包) 即可得到 flag。"
+	},
+	{
+		"name": "Bonus 2",
+		"flag": "917-config",
+		"score": 1,
+		"category": "Bonus",
+		"comment": "翻阅家目录下的 ~/.gitconfig 或 .git/config 文件均可得到 flag。"
+	},
+	{
+		"name": "Bonus 3",
+		"flag": "web-debugger",
+		"score": 1,
+		"category": "Bonus",
+		"comment": "在 (较新版本的) Chrome/Edge 浏览器的检查模式中点开 Sources (源代码) 面板中可以找到前端工作区的树形结构，其中的 src/pages/main.tsx 文件中藏有 flag (具体的 Web 和前后端会在后续的课程中涉及)。其余浏览器类似。"
+	},
+	{
+		"name": "Bonus 4",
+		"flag": "http://headers",
+		"score": 1,
+		"category": "Bonus",
+		"comment": "在用 curl 提交时加上 -i 选项，即可查看到响应头 Bonus3: sast2023{http://headers}，wget 类似。",
+		"comment2": "事实上，该服务器的所有响应的 Header 都会带上这一项响应头，这可以在 Chrome/Edge 浏览器的检查模式中的 Network (网络) 面板中找到，这也是一个非常有用的利器。"
+	},
+	{
+		"name": "Bonus 5",
+		"flag": "|)_()_(_|<_E_|2_file",
+		"score": 1,
+		"category": "Bonus",
+		"comment": "进入 handout 中的 Docker Hub 链接，进入某一个具体的 Tag (点击 Tags 面板 -> 点击一项的详细信息)，可以在 Image Layers 中看到类似 Dockerfile 配置 (Docker 的具体原理会在后续的课程中涉及)，在 Docker Hub 中可以看到镜像的每一层 Layer 以及它们对应的命令。"
+	},
+	{
+		"name": "Bonus 6",
+		"flag": "prOF1Le_d3t3ctor",
+		"score": 1,
+		"category": "Bonus",
+		"comment": "在我的 GitHub 个人页面 (yhx-12243) 和 git.tsinghua 个人页面 (yu-hx21) 中都可以找到。"
+	},
+	{
+		"name": "Bonus 7",
+		"flag": "custom-TLDR-page",
+		"score": 1,
+		"category": "Bonus",
+		"comment": "tldr"
+	}
+]

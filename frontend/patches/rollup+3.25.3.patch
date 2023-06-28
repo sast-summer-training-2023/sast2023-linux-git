@@ -1,0 +1,41 @@
+diff --git a/node_modules/rollup/dist/es/shared/node-entry.js b/node_modules/rollup/dist/es/shared/node-entry.js
+index 4ab7afd..c5c2d0f 100644
+--- a/node_modules/rollup/dist/es/shared/node-entry.js
++++ b/node_modules/rollup/dist/es/shared/node-entry.js
+@@ -17532,8 +17532,9 @@ async function transformChunk(magicString, fileName, usedModules, chunkGraph, op
+             resultingFile = resolve(dir, fileName);
+         else
+             resultingFile = resolve(fileName);
+-        const decodedMap = magicString.generateDecodedMap({});
++        const decodedMap = magicString.generateDecodedMap({ hires: env$1.NODE_ENV === 'production' });
+         map = collapseSourcemaps(resultingFile, decodedMap, usedModules, sourcemapChain, sourcemapExcludeSources, log);
++        await outputPluginDriver.hookSeq('jkmx$updateChunkMap', [map, resultingFile]);
+         for (let sourcesIndex = 0; sourcesIndex < map.sources.length; ++sourcesIndex) {
+             let sourcePath = map.sources[sourcesIndex];
+             const sourcemapPath = `${resultingFile}.map`;
+@@ -17668,7 +17669,7 @@ function emitSourceMapAndGetComment(fileName, map, pluginDriver, { sourcemap, so
+             : sourcemapFileName;
+         pluginDriver.emitFile({ fileName: `${fileName}.map`, source: map.toString(), type: 'asset' });
+     }
+-    return sourcemap === 'hidden' ? '' : `//# ${SOURCEMAPPING_URL}=${url}\n`;
++    return sourcemap === 'hidden' ? '' : `//# ${SOURCEMAPPING_URL}=${url}`;
+ }
+ 
+ class Bundle {
+diff --git a/node_modules/rollup/dist/shared/rollup.js b/node_modules/rollup/dist/shared/rollup.js
+index d51ed19..cb9e8e8 100644
+--- a/node_modules/rollup/dist/shared/rollup.js
++++ b/node_modules/rollup/dist/shared/rollup.js
+@@ -27070,10 +27070,12 @@ exports.URL_TREATING_MODULE_AS_EXTERNAL_DEPENDENCY = URL_TREATING_MODULE_AS_EXTE
+ exports.URL_WATCH = URL_WATCH;
+ exports.blue = blue;
+ exports.bold = bold;
++exports.collapseSourcemap = collapseSourcemap;
+ exports.commandAliases = commandAliases;
+ exports.createFilter = createFilter;
+ exports.cyan = cyan$1;
+ exports.cyan$1 = cyan;
++exports.decodedSourcemap = decodedSourcemap;
+ exports.defineConfig = defineConfig;
+ exports.ensureArray = ensureArray$1;
+ exports.error = error;

@@ -1,0 +1,34 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"jsxFragmentName": "Fragment",
+		"jsxPragma": "createElement",
+		"sourceType": "module"
+	},
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"settings": {
+		"react": {
+			"fragment": "Fragment",
+			"pragma": "createElement",
+			"version": "detect"
+		}
+	},
+	"rules": {
+		"no-empty": [
+			"error",
+			{
+				"allowEmptyCatch": true
+			}
+		],
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"react/prop-types": "off"
+	}
+}
