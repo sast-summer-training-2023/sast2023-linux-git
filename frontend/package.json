@@ -11,10 +11,10 @@
 		"@types/react": "^18.2.14",
 		"@types/react-dom": "^18.2.6",
 		"@typescript-eslint/eslint-plugin": "^5.60.1",
-		"eslint": "^8.43.0",
+		"eslint": "^8.44.0",
 		"eslint-plugin-react": "^7.32.2",
 		"patch-package": "^7.0.0",
-		"rollup": "^3.25.3",
+		"rollup": "^3.26.0",
 		"rollup-plugin-esbuild": "^5.0.0",
 		"rollup-plugin-external-globals": "^0.8.0"
 	},
@@ -25,7 +25,8 @@
 		"prod": "NODE_ENV=production node build.js",
 		"clean": "rm -rf dist",
 		"check": "tsc --noEmit",
-		"lint": "eslint \"src/**/*.{ts,js,tsx,jsx}\""
+		"lint": "eslint \"src/**/*.{ts,js,tsx,jsx}\"",
+		"postinstall": "patch-package"
 	},
 	"type": "module"
 }

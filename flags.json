@@ -2,14 +2,14 @@
 	{
 		"name": "`chmod` & `tmux`",
 		"flag": "1",
-		"score": 0,
+		"score": 3,
 		"category": "Linux",
 		"comment": ""
 	},
 	{
 		"name": "Environment",
 		"flag": "2",
-		"score": 0,
+		"score": 2,
 		"category": "Linux",
 		"comment": "(redirection, ulimit)"
 	},

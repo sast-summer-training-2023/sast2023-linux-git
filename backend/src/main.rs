@@ -1,4 +1,3 @@
-#![feature(lazy_cell)]
 #![feature(let_chains)]
 #![feature(try_blocks)]
 #![feature(vec_into_raw_parts)]
@@ -23,6 +22,7 @@
  *   "data": [
  *     {
  *       "id": 2022_stuid,
+ *       "name": "姓名",
  *       "state": [ null, 16timestamp, ... ]
  *     },
  *     ...

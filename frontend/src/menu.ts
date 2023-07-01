@@ -9,7 +9,7 @@ export interface MenuItem {
 const Menu: Record<string, MenuItem> = {
 	index: {
 		icon: 'chart bar',
-		name: '排行榜',
+		name: 'Leaderboard',
 		to: '/'
 	}
 };

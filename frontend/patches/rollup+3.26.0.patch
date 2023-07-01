@@ -1,5 +1,5 @@
 diff --git a/node_modules/rollup/dist/es/shared/node-entry.js b/node_modules/rollup/dist/es/shared/node-entry.js
-index 4ab7afd..c5c2d0f 100644
+index 9a75318..e1a0e4b 100644
 --- a/node_modules/rollup/dist/es/shared/node-entry.js
 +++ b/node_modules/rollup/dist/es/shared/node-entry.js
 @@ -17532,8 +17532,9 @@ async function transformChunk(magicString, fileName, usedModules, chunkGraph, op
@@ -23,10 +23,10 @@ index 4ab7afd..c5c2d0f 100644
  
  class Bundle {
 diff --git a/node_modules/rollup/dist/shared/rollup.js b/node_modules/rollup/dist/shared/rollup.js
-index d51ed19..cb9e8e8 100644
+index 9a1b611..5161e47 100644
 --- a/node_modules/rollup/dist/shared/rollup.js
 +++ b/node_modules/rollup/dist/shared/rollup.js
-@@ -27070,10 +27070,12 @@ exports.URL_TREATING_MODULE_AS_EXTERNAL_DEPENDENCY = URL_TREATING_MODULE_AS_EXTE
+@@ -27071,10 +27071,12 @@ exports.URL_TREATING_MODULE_AS_EXTERNAL_DEPENDENCY = URL_TREATING_MODULE_AS_EXTE
  exports.URL_WATCH = URL_WATCH;
  exports.blue = blue;
  exports.bold = bold;

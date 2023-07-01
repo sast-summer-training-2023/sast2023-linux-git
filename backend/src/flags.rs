@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::cell::LazyCell;
+use tokio::sync::OnceCell;
 
 #[derive(Deserialize, Serialize)]
 pub struct FlagInfo {
@@ -10,12 +10,12 @@ pub struct FlagInfo {
     pub category: String,
 }
 
-fn init() -> Vec<FlagInfo> {
+async fn init() -> Vec<FlagInfo> {
     serde_json::from_str(include_str!("../../flags.json")).unwrap()
 }
 
-static mut FLAGS: LazyCell<Vec<FlagInfo>> = LazyCell::new(init);
+static FLAGS: OnceCell<Vec<FlagInfo>> = OnceCell::const_new();
 
-pub fn get() -> &'static [FlagInfo] {
-    unsafe { &FLAGS }
+pub async fn get() -> &'static [FlagInfo] {
+    FLAGS.get_or_init(init).await
 }

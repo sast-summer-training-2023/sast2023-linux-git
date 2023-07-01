@@ -132,7 +132,11 @@ tr.list-loading>td {
 .ui.pink.statistics .statistic>.label {
 	color: #e03997;
 }
-
+/*
+.ui.selectable.table>tbody>tr, .ui.selectable.table>tr, .ui.table>tbody>tr>td.selectable, .ui.table>tr>td.selectable {
+	cursor: inherit;
+}
+*/
 .ui.size-16-5.header {
 	font-size: 1.17857143rem;
 }

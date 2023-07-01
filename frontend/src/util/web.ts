@@ -8,7 +8,7 @@ export async function request(url: URL | RequestInfo, options?: RequestInit) {
 	const response = await fetch(url, options);
 	if (response.status === 200) return await response.json();
 	try {
-		return await response.json();
+		throw new Error(`Request failed (status: ${response.status} ${response.statusText})`, { cause: await response.json() });
 	} catch {
 		throw new Error(`Request failed (status: ${response.status} ${response.statusText})`, { cause: response });
 	}

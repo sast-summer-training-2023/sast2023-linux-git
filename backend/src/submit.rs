@@ -58,11 +58,11 @@ pub async fn submit<'a>(
     request: &'a SubmitRequest,
     time: u64,
 ) -> Result<SubmitSuccess<'a>, SubmitError<'a>> {
-    let id: u32 = if let Some(id_str) = request.id.as_deref() {
-        if id_str.len() == 10 && id_str.starts_with("20") && let Ok(id) = id_str.parse::<u32>() {
+    let id: u32 = if let Some(id) = request.id.as_deref() {
+        if id.len() == 10 && id.starts_with("20") && let Ok(id) = id.parse::<u32>() {
             id
         } else {
-            return Err(SubmitError::IdFormatError { id: id_str });
+            return Err(SubmitError::IdFormatError { id });
         }
     } else {
         0u32
@@ -75,7 +75,7 @@ pub async fn submit<'a>(
     // SAFETY: flag starts with "sast2023{" and end with '}'.
     let raw_flag: &str = unsafe { flag.get_unchecked(9..flag.len() - 1) };
 
-    let all_flags: &[FlagInfo] = flags::get();
+    let all_flags: &[FlagInfo] = flags::get().await;
     // assume all_flags.len() is constant
     let entry: Option<(usize, &FlagInfo)> = all_flags
         .iter()

@@ -170,7 +170,7 @@ export class jkmx {
 };
 
 async function build() {
-	const warnings = batchWarnings();
+	const warnings = batchWarnings({});
 	try {
 		return await rollup(await mergeOptions(await Config, {}, warnings.add));
 	} catch (e) {

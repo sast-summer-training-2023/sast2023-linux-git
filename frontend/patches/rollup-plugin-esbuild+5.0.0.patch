@@ -1,0 +1,21 @@
+diff --git a/node_modules/rollup-plugin-esbuild/dist/index.mjs b/node_modules/rollup-plugin-esbuild/dist/index.mjs
+index 1dbe99b..87a83a9 100644
+--- a/node_modules/rollup-plugin-esbuild/dist/index.mjs
++++ b/node_modules/rollup-plugin-esbuild/dist/index.mjs
+@@ -78,7 +78,7 @@ var getRenderChunk = ({
+ }) => async function(code, _, rollupOptions) {
+   if (options.minify || options.minifyWhitespace || options.minifyIdentifiers || options.minifySyntax) {
+     const format = getEsbuildFormat(rollupOptions.format);
+-    const result = await transform(code, {
++    const result = await transform(code + 'export{}', {
+       format,
+       loader: "js",
+       sourcemap: sourceMap,
+@@ -283,6 +283,7 @@ var src_default = ({
+       if (!filter(id) || (optimizeDepsResult == null ? void 0 : optimizeDepsResult.optimized.has(id))) {
+         return null;
+       }
++      console.log(`\x1b[36mTransforming \x1b[33m${id}\x1b[36m ...\x1b[0m`);
+       const ext = extname(id);
+       const loader = loaders[ext];
+       if (!loader) {
