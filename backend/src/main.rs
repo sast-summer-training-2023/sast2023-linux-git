@@ -40,8 +40,7 @@ use crate::db::DBWrapper;
 use actix_web::{
     http::StatusCode, post, web, App, Error as ActixError, HttpResponse, HttpServer, Responder,
 };
-use serde_json::json;
-use submit::SubmitRequest;
+use submit::{SubmitError, SubmitRequest, SubmitSuccess};
 
 const BAD_JSON: &str = "\"Serialization Failed\"";
 
@@ -52,7 +51,7 @@ async fn handle_query(db: web::Data<DBWrapper>) -> impl Responder {
     let mut response = HttpResponse::Ok();
     response.content_type(mime::APPLICATION_JSON);
 
-    let res = match query::query(db.get_ref(), time).await {
+    let body = match query::query(db.get_ref(), time).await {
         Err(err) => {
             response.status(StatusCode::BAD_REQUEST);
             serde_json::to_string(&err)
@@ -60,11 +59,11 @@ async fn handle_query(db: web::Data<DBWrapper>) -> impl Responder {
         Ok(succ) => serde_json::to_string(&succ),
     }
     .unwrap_or_else(|_| {
-        response.status(StatusCode::BAD_REQUEST);
+        response.status(StatusCode::INTERNAL_SERVER_ERROR);
         BAD_JSON.to_owned()
     });
 
-    response.message_body(res)
+    response.message_body(body)
 }
 
 #[post("/submit")]
@@ -77,30 +76,30 @@ async fn handle_submit(
     let mut response = HttpResponse::Ok();
     response.content_type(mime::APPLICATION_JSON);
 
-    let res: String = 'r: {
-        let req: SubmitRequest = match req {
-            Err(err) => {
-                response.status(StatusCode::BAD_REQUEST);
-                break 'r json!({"RequestError": err.to_string()}).to_string();
-            }
+    let req_inner: SubmitRequest;
+    let res: Result<SubmitSuccess, SubmitError> = 'r: {
+        req_inner = match req {
+            Err(err) => break 'r Err(SubmitError::RequestError(err.to_string())),
             Ok(either) => either,
         }
         .into_inner();
 
-        match submit::submit(db.get_ref(), &req.id, &req.flag, time).await {
-            Err(err) => {
-                response.status(StatusCode::BAD_REQUEST);
-                serde_json::to_string(&err)
-            }
-            Ok(succ) => serde_json::to_string(&succ),
-        }
-        .unwrap_or_else(|_| {
-            response.status(StatusCode::BAD_REQUEST);
-            BAD_JSON.to_owned()
-        })
+        submit::submit(db.get_ref(), &req_inner, time).await
     };
 
-    response.message_body(res)
+    let body = match res {
+        Ok(succ) => serde_json::to_string(&succ),
+        Err(err) => {
+            response.status(err.get_status_code());
+            serde_json::to_string(&err)
+        }
+    }
+    .unwrap_or_else(|_| {
+        response.status(StatusCode::INTERNAL_SERVER_ERROR);
+        BAD_JSON.to_owned()
+    });
+
+    response.message_body(body)
 }
 
 #[actix_web::main]

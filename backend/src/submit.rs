@@ -2,14 +2,18 @@ use crate::{
     db::DBWrapper,
     flags::{self, FlagInfo},
 };
+use actix_web::http::StatusCode;
 use serde::{Deserialize, Serialize};
 use std::ops::DerefMut;
 
+/// A request object.
 #[derive(Deserialize)]
 pub struct SubmitRequest {
-    pub id: String,
+    pub id: Option<String>,
     pub flag: String,
 }
+
+/// Error results, will always return 400 Bad Request except DatabaseError(500 Internal Server Error).
 #[derive(Serialize)]
 pub enum SubmitError<'a> {
     IdFormatError { id: &'a str },
@@ -17,8 +21,19 @@ pub enum SubmitError<'a> {
     WrongFlag { raw_flag: &'a str },
     MemberNotFound { id: u32 },
     DatabaseError(String),
+    RequestError(String),
 }
 
+impl<'a> SubmitError<'a> {
+    pub fn get_status_code(&self) -> StatusCode {
+        match self {
+            Self::DatabaseError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            _ => StatusCode::BAD_REQUEST,
+        }
+    }
+}
+
+/// Success results, will always return 200 OK.
 #[derive(Serialize)]
 pub enum SubmitSuccess<'a> {
     Success {
@@ -40,17 +55,20 @@ pub const SQL: &str = "update leaderboard set state[$2] = $3 where id = $1 retur
 
 pub async fn submit<'a>(
     db: &'a DBWrapper,
-    id: &'a str,
-    flag: &'a str,
+    request: &'a SubmitRequest,
     time: u64,
 ) -> Result<SubmitSuccess<'a>, SubmitError<'a>> {
-    let id: u32 = 'get_id: {
-        if id.len() == 10 && id.starts_with("20") && let Ok(id) = id.parse::<u32>() {
-            break 'get_id id;
+    let id: u32 = if let Some(id_str) = request.id.as_deref() {
+        if id_str.len() == 10 && id_str.starts_with("20") && let Ok(id) = id_str.parse::<u32>() {
+            id
+        } else {
+            return Err(SubmitError::IdFormatError { id: id_str });
         }
-        return Err(SubmitError::IdFormatError { id });
+    } else {
+        0u32
     };
 
+    let flag: &str = &request.flag;
     if !flag.starts_with("sast2023{") || !flag.ends_with('}') {
         return Err(SubmitError::FlagFormatError { flag });
     }
@@ -69,37 +87,39 @@ pub async fn submit<'a>(
         _ => return Err(SubmitError::WrongFlag { raw_flag }),
     };
 
-    let txn_result: Result<(), tokio_postgres::Error> = try {
-        let mut guard = db.client.write().await;
-        let client = guard.deref_mut();
-        let txn = client.transaction().await?;
+    if request.id.is_some() {
+        let txn_result: Result<(), tokio_postgres::Error> = try {
+            let mut guard = db.client.write().await;
+            let client = guard.deref_mut();
+            let txn = client.transaction().await?;
 
-        let rows = txn
-            .query(
-                &db.submit_statement,
-                &[&(id as i32), &(ord as i32), &(time as i64)],
-            )
-            .await?;
+            let rows = txn
+                .query(
+                    &db.submit_statement,
+                    &[&(id as i32), &(ord as i32), &(time as i64)],
+                )
+                .await?;
 
-        let row = match rows.first() {
-            None => return Err(SubmitError::MemberNotFound { id }),
-            Some(row) => row,
+            let row = match rows.first() {
+                None => return Err(SubmitError::MemberNotFound { id }),
+                Some(row) => row,
+            };
+
+            if let Ok(t) = row.try_get::<_, i64>(0) {
+                return Ok(SubmitSuccess::AlreadySubmitted {
+                    name: &info.name,
+                    flag: &info.flag,
+                    score: info.score,
+                    time,
+                    submit_time: t as u64,
+                });
+            }
+
+            txn.commit().await?;
         };
-
-        if let Ok(t) = row.try_get::<_, i64>(0) {
-            return Ok(SubmitSuccess::AlreadySubmitted {
-                name: &info.name,
-                flag: &info.flag,
-                score: info.score,
-                time,
-                submit_time: t as u64,
-            });
+        if let Err(e) = txn_result {
+            return Err(SubmitError::DatabaseError(e.to_string()));
         }
-
-        txn.commit().await?;
-    };
-    if let Err(e) = txn_result {
-        return Err(SubmitError::DatabaseError(e.to_string()));
     }
 
     Ok(SubmitSuccess::Success {
