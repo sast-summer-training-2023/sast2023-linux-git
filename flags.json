@@ -71,10 +71,10 @@
 	},
 	{
 		"name": "TUNA",
-		"flag": "11",
+		"flag": "HelloTUNA!",
 		"score": 1,
 		"category": "Linux",
-		"comment": ""
+		"comment": "查阅 /etc/apt/sources.list 文件即可找到。"
 	},
 	{
 		"name": "Culprit",
