@@ -1,0 +1,25 @@
+[alias]
+	# 合理配置 git 的 alias 可以加快工作哦~
+	# br = branch --verbose --all --verbose
+	# co = commit --gpg-sign --amend --no-edit
+	# di = diff --staged
+	# lg = log --graph --author-date-order --all --pretty='%C(auto)%h%d %s %Cgreen(%ai) %C(bold blue)<%an>%Creset'
+	# lg = log --oneline --decorate --graph --all
+	# st = status
+	# sw = switch
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	# 这里是 git-lfs 的一些可能配置
+	# clean = git-lfs clean -- %f
+	# smudge = git-lfs smudge -- %f
+	# process = git-lfs filter-process
+	# required = true
+[core]
+	# 配置这个可以防止中文被转义~
+	quotepath = off
+[http]
+	# 这里用来配置 git 的代理。
+	# proxy = http://127.0.0.1:1087
+[bonus2]
+	bonus2 = sast2023{917-config}

@@ -8,7 +8,7 @@
 	},
 	{
 		"name": "Environment",
-		"flag": "2",
+		"flag": "SHELL-BASIC-SKILLS",
 		"score": 2,
 		"category": "Linux",
 		"comment": "(redirection, ulimit)"
@@ -109,7 +109,7 @@
 		"flag": "http://headers",
 		"score": 1,
 		"category": "Bonus",
-		"comment": "在用 curl 提交时加上 -i 选项，即可查看到响应头 Bonus3: sast2023{http://headers}，wget 类似。",
+		"comment": "在用 curl 提交时加上 -i 选项，即可查看到响应头 Bonus4: sast2023{http://headers}，wget 类似。",
 		"comment2": "事实上，该服务器的所有响应的 Header 都会带上这一项响应头，这可以在 Chrome/Edge 浏览器的检查模式中的 Network (网络) 面板中找到，这也是一个非常有用的利器。"
 	},
 	{
@@ -131,6 +131,6 @@
 		"flag": "custom-TLDR-page",
 		"score": 1,
 		"category": "Bonus",
-		"comment": "tldr"
+		"comment": "tldr sast / tldr sast2023"
 	}
 ]
