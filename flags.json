@@ -1,10 +1,10 @@
 [
 	{
 		"name": "`chmod` & `tmux`",
-		"flag": "1",
+		"flag": "ConCurrency",
 		"score": 3,
 		"category": "Linux",
-		"comment": ""
+		"comment": "先使用 chmod +x linux 给文件执行权限，然后使用 tmux 新开一个 session 后台执行，Ctrl + B ~ d 将其脱离 (detach)。等待 20 ~ 30 分钟后使用 tmux attach 重新回到原 session 即可看到 flag。"
 	},
 	{
 		"name": "Environment",
