@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cat <<'EOF'
+In this task, you need to find the hidden flag in a text file `cipher.txt`.
+
+To decode the flag, please do the following three operations in order:
+  1) Remove all the occurrences of '['
+  2) Replace all the occurrences of 'pr' (only lowercase) to 'IN'
+  3) Remove all the occurrences of ']'
+  4) Replace all the occurrences of 'qu' (despite uppercase or lowercase) to 'st'
+  5) After these steps, find your flag!
+EOF

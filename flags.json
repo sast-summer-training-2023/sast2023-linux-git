@@ -15,10 +15,10 @@
 	},
 	{
 		"name": "Text Process",
-		"flag": "3",
+		"flag": "Tekst_Process_practice_IN_termINal",
 		"score": 1,
 		"category": "Linux",
-		"comment": ""
+		"comment": ":%s/\\[//g :%s/pr/IN/g :%s/\\]//g :%s/\\cqu/st/g /sast2023{"
 	},
 	{
 		"name": "Archives",
