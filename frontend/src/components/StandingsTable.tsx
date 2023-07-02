@@ -1,8 +1,10 @@
 import { createElement, Fragment, useEffect, useState } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, type PaginationProps } from 'semantic-ui-react';
 
 import { LeaderBoard, ResultRow } from '../models/leaderboard';
 import { date2str } from '../util/date';
+import { clipInt } from '../util/nt';
+import Pagination from './util/Pagination';
 import ProgressGradient from './util/ProgressGradient';
 import TableLoader from './util/TableLoader';
 import WithCode from './util/WithCode';
@@ -18,14 +20,12 @@ interface StandingsTableProps {
 }
 
 type SortFunction = (x: ResultRow, y: ResultRow) => boolean;
-
 const SORT_BY_ID: SortFunction = (x: ResultRow, y: ResultRow) => x.id < y.id;
 const SORT_BY_SCORE: SortFunction = (x: ResultRow, y: ResultRow) => {
 	if (x.score !== y.score) return x.score > y.score;
 	if (x.latest !== y.latest) return x.latest < y.latest;
 	return x.id < y.id;
 }
-
 function doSort(rows: ResultRow[], compare: SortFunction, reverse: boolean): ResultRow[] {
 	return rows.sort(
 		(x, y) =>
@@ -33,6 +33,8 @@ function doSort(rows: ResultRow[], compare: SortFunction, reverse: boolean): Res
 				compare(y, x) ? (reverse ? -1 : 1) :
 					0);
 }
+
+const ROWS_PER_PAGE = clipInt(parseInt(localStorage.getItem('rowsPerPage')!), 10, 200, 50);
 
 export const LeaderBoardEntryRow: React.FC<LeaderBoardEntryRowProps> = props => {
 	return (
@@ -75,8 +77,9 @@ export const LeaderBoardEntryRow: React.FC<LeaderBoardEntryRowProps> = props => 
 
 export const StandingsTable: React.FC<StandingsTableProps> = props => {
 	const [sortFunction, setSortFunction] = useState<[SortFunction]>([SORT_BY_SCORE]); // function hack
-	const [sortReverse, setSortReverse] = useState<boolean>(false);
+	const [sortReverse, setSortReverse] = useState(false);
 	const [rows, setRows] = useState<ResultRow[]>([]);
+	const [page, setPage] = useState(1);
 
 	useEffect(() => {
 		const rows = [...(props.board?.data ?? [])];
@@ -96,63 +99,75 @@ export const StandingsTable: React.FC<StandingsTableProps> = props => {
 		}
 	}
 
+	function handlePageChange({ activePage }: PaginationProps) {
+		setPage(activePage as number);
+	}
+
 	return (
-		<div className="standings-table">
-			<Table textAlign="center" celled sortable unstackable className="standings-table">
-				<Table.Header>
-					<Table.Row>
-						<Table.HeaderCell rowSpan={2}>#</Table.HeaderCell>
-						<Table.HeaderCell
-							rowSpan={2}
-							sorted={sortFunction[0] === SORT_BY_ID ? (sortReverse ? 'descending' : 'ascending') : undefined}
-							onClick={() => handleSort(SORT_BY_ID)}
-						>
-							ID
-						</Table.HeaderCell>
-						<Table.HeaderCell
-							rowSpan={2}
-							sorted={sortFunction[0] === SORT_BY_SCORE ? (sortReverse ? 'ascending' : 'descending') : undefined}
-							onClick={() => handleSort(SORT_BY_SCORE)}
-						>
-							Score
-						</Table.HeaderCell>
-						{
-							props.board?.categories.map(({ name, flags }, idx) =>
-								<Table.HeaderCell key={idx} colSpan={flags.length}>
-									<WithCode content={name} />
-								</Table.HeaderCell>
-							)
-						}
-					</Table.Row>
-					<Table.Row>
-						<Table.HeaderCell style={{ display: 'none' }} /* CSS Hack */></Table.HeaderCell>
-						{
-							props.board?.flags.map(({ name, count }, idx) =>
-								<Table.HeaderCell key={idx} className="no-wrap">
-									<WithCode content={name} />
-									<br />
-									<span className="prompt">(count: <ProgressGradient
-										content={count.toString()}
-										cur={count}
-										max={props.board!.data.length}
-									/>)</span>
-								</Table.HeaderCell>
-							)
-						}
-					</Table.Row>
-				</Table.Header>
-				<Table.Body>
-					{props.board
-						? rows.map(
-							(row, idx) => {
-								const real_idx = sortReverse ? props.board!.data.length - idx - 1 : idx;
-								return <LeaderBoardEntryRow key={real_idx} idx={real_idx} row={row} board={props.board!} />;
+		<>
+			<div className="standings-table">
+				<Table textAlign="center" celled sortable unstackable className="standings-table">
+					<Table.Header>
+						<Table.Row>
+							<Table.HeaderCell rowSpan={2}>#</Table.HeaderCell>
+							<Table.HeaderCell
+								rowSpan={2}
+								sorted={sortFunction[0] === SORT_BY_ID ? (sortReverse ? 'descending' : 'ascending') : undefined}
+								onClick={() => handleSort(SORT_BY_ID)}
+							>
+								ID
+							</Table.HeaderCell>
+							<Table.HeaderCell
+								rowSpan={2}
+								sorted={sortFunction[0] === SORT_BY_SCORE ? (sortReverse ? 'ascending' : 'descending') : undefined}
+								onClick={() => handleSort(SORT_BY_SCORE)}
+							>
+								Score
+							</Table.HeaderCell>
+							{
+								props.board?.categories.map(({ name, flags }, idx) =>
+									<Table.HeaderCell key={idx} colSpan={flags.length}>
+										<WithCode content={name} />
+									</Table.HeaderCell>
+								)
 							}
-						)
-						: <TableLoader colSpan={3} />
-					}
-				</Table.Body>
-			</Table>
-		</div>
+						</Table.Row>
+						<Table.Row>
+							<Table.HeaderCell style={{ display: 'none' }} /* CSS Hack */></Table.HeaderCell>
+							{
+								props.board?.flags.map(({ name, count }, idx) =>
+									<Table.HeaderCell key={idx} className="no-wrap">
+										<WithCode content={name} />
+										<br />
+										<span className="prompt">(count: <ProgressGradient
+											content={count.toString()}
+											cur={count}
+											max={props.board!.data.length}
+										/>)</span>
+									</Table.HeaderCell>
+								)
+							}
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{props.board
+							? rows
+								.slice((page - 1) * ROWS_PER_PAGE, page * ROWS_PER_PAGE)
+								.map(
+									(row, idx) => {
+										idx += (page - 1) * ROWS_PER_PAGE;
+										if (sortReverse) idx = props.board!.data.length - idx - 1;
+										return <LeaderBoardEntryRow key={idx} idx={idx} row={row} board={props.board!} />;
+									}
+								)
+							: <TableLoader colSpan={3} />
+						}
+					</Table.Body>
+				</Table>
+			</div>
+			<div style={{ textAlign: 'center', marginTop: '1rem' }}>
+				<Pagination page={page} total={Math.ceil(rows.length / ROWS_PER_PAGE)} onPageChange={handlePageChange} />
+			</div>
+		</>
 	);
 }
