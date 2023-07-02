@@ -32,7 +32,7 @@ div.standings-table>.ui.table>thead>tr:nth-child(1)>th:nth-child(3),
 div.standings-table>.ui.table>tbody>tr>td:nth-child(3) {
 	border-right: 1px solid rgba(34, 36, 38, .1);
 	left: 10.5rem;
-	min-width: 4rem;
+	min-width: 4.5rem;
 	position: sticky;
 	z-index: 1;
 }

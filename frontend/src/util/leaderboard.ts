@@ -1,7 +1,7 @@
 import type { FlagInfo, LeaderBoard } from '../models/leaderboard';
+import { assert } from './type';
 
 import '../styles/leaderboard.css';
-import { assert } from './type';
 
 export class Category {
 	/** The description of this category. */

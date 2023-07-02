@@ -1,19 +1,13 @@
 import { createElement, Fragment, useEffect, useState } from 'react';
 import { Table, type PaginationProps } from 'semantic-ui-react';
 
-import { LeaderBoard, ResultRow } from '../models/leaderboard';
-import { date2str } from '../util/date';
+import type { LeaderBoard, ResultRow } from '../models/leaderboard';
 import { clipInt } from '../util/nt';
+import LeaderBoardEntryRow from './LeaderBoardEntryRow';
 import Pagination from './util/Pagination';
 import ProgressGradient from './util/ProgressGradient';
 import TableLoader from './util/TableLoader';
 import WithCode from './util/WithCode';
-
-interface LeaderBoardEntryRowProps {
-	readonly idx: number;
-	readonly row: ResultRow;
-	readonly board: LeaderBoard;
-}
 
 interface StandingsTableProps {
 	readonly board: LeaderBoard | null;
@@ -26,6 +20,11 @@ const SORT_BY_SCORE: SortFunction = (x: ResultRow, y: ResultRow) => {
 	if (x.latest !== y.latest) return x.latest < y.latest;
 	return x.id < y.id;
 }
+const SORT_BY_PART_n: (n: number) => SortFunction = (n: number) => (x: ResultRow, y: ResultRow) => {
+	const l = x.state[n] ?? Infinity, r = y.state[n] ?? Infinity;
+	return l === r ? x.id < y.id : l < r;
+}
+const SORT_BY_PART: SortFunction[] = [];
 function doSort(rows: ResultRow[], compare: SortFunction, reverse: boolean): ResultRow[] {
 	return rows.sort(
 		(x, y) =>
@@ -36,46 +35,7 @@ function doSort(rows: ResultRow[], compare: SortFunction, reverse: boolean): Res
 
 const ROWS_PER_PAGE = clipInt(parseInt(localStorage.getItem('rowsPerPage')!), 10, 200, 50);
 
-export const LeaderBoardEntryRow: React.FC<LeaderBoardEntryRowProps> = props => {
-	return (
-		<Table.Row>
-			<Table.Cell>{props.idx + 1}</Table.Cell>
-			<Table.Cell>
-				{props.row.id}
-				<br />
-				<span className="prompt">{props.row.name}</span>
-			</Table.Cell>
-			<Table.Cell>
-				<ProgressGradient
-					content={props.row.score.toString()}
-					cur={props.row.score}
-					max={props.board.score}
-				/>
-			</Table.Cell>
-			{
-				props.row.state.map((optionalTime, idx) =>
-					<Table.Cell key={idx}>
-						{
-							optionalTime
-								? <>
-									<ProgressGradient
-										content={props.board.flags[idx].score.toString()}
-										cur={1}
-										max={1}
-									/>
-									<br />
-									<span className="prompt no-wrap">{date2str(new Date(optionalTime * 1e3))}</span>
-								</>
-								: null
-						}
-					</Table.Cell>
-				)
-			}
-		</Table.Row>
-	)
-}
-
-export const StandingsTable: React.FC<StandingsTableProps> = props => {
+const StandingsTable: React.FC<StandingsTableProps> = props => {
 	const [sortFunction, setSortFunction] = useState<[SortFunction]>([SORT_BY_SCORE]); // function hack
 	const [sortReverse, setSortReverse] = useState(false);
 	const [rows, setRows] = useState<ResultRow[]>([]);
@@ -83,6 +43,9 @@ export const StandingsTable: React.FC<StandingsTableProps> = props => {
 
 	useEffect(() => {
 		const rows = [...(props.board?.data ?? [])];
+		if (props.board)
+			for (; SORT_BY_PART.length < props.board.flags.length;)
+				SORT_BY_PART.push(SORT_BY_PART_n(SORT_BY_PART.length));
 		setRows(doSort(rows, sortFunction[0], sortReverse));
 	}, [props.board]);
 
@@ -136,7 +99,12 @@ export const StandingsTable: React.FC<StandingsTableProps> = props => {
 							<Table.HeaderCell style={{ display: 'none' }} /* CSS Hack */></Table.HeaderCell>
 							{
 								props.board?.flags.map(({ name, count }, idx) =>
-									<Table.HeaderCell key={idx} className="no-wrap">
+									<Table.HeaderCell
+										key={idx}
+										className="no-wrap"
+										sorted={sortFunction[0] === SORT_BY_PART[idx] ? (sortReverse ? 'ascending' : 'descending') : undefined}
+										onClick={() => handleSort(SORT_BY_PART[idx])}
+									>
 										<WithCode content={name} />
 										<br />
 										<span className="prompt">(count: <ProgressGradient
@@ -171,3 +139,5 @@ export const StandingsTable: React.FC<StandingsTableProps> = props => {
 		</>
 	);
 }
+
+export default StandingsTable;

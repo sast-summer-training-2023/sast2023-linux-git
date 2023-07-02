@@ -1,7 +1,7 @@
 import { createElement, Fragment, useEffect, useState } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
 
-import { StandingsTable } from '../components/StandingsTable';
+import StandingsTable from '../components/StandingsTable';
 import ErrorMessage from '../components/util/ErrorMessage';
 import { getLeaderBoard } from '../libs/api/leaderboard';
 import type { LeaderBoard } from '../models/leaderboard';
