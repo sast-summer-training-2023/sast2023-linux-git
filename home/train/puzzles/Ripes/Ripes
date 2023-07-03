@@ -9,6 +9,6 @@ We want you compute some statistics of this project.
   3) After that please take files that is greater than 3 KiB (3072 B).
   4) Over all these files, please compute the [1;33mtotal line number[0m (add up).
 
-In the end, if the sum of line number is equal to [32m<X>[0m, the flag is 'sast2022{[32m<X>[0m-LINES-IN-TOTAL}',
-  [37me.g., if the total line number is equal to 1024, the flag will be 'sast2022{1024-LINES-IN-TOTAL}'[0m.
+In the end, if the sum of line number is equal to [32m<X>[0m, the flag is 'sast2023{[32m<X>[0m-LINES-IN-TOTAL}',
+  [37me.g., if the total line number is equal to 1024, the flag will be 'sast2023{1024-LINES-IN-TOTAL}'[0m.
 EOF
