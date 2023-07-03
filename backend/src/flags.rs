@@ -11,7 +11,10 @@ pub struct FlagInfo {
 }
 
 async fn init() -> Vec<FlagInfo> {
-    serde_json::from_str(include_str!("../../flags.json")).unwrap()
+    serde_json::from_str(
+        &std::fs::read_to_string("../flags.json").expect("flags.json not found"),
+    )
+    .expect("JSON format error")
 }
 
 static FLAGS: OnceCell<Vec<FlagInfo>> = OnceCell::const_new();
