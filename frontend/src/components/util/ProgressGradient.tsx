@@ -11,4 +11,6 @@ const ProgressGradient: React.FC<ProgressGradientProps> = props => {
 	return <span className={`progress-${progress}`}>{props.content}</span>;
 }
 
+ProgressGradient.displayName = 'ProgressGradient';
+
 export default ProgressGradient;

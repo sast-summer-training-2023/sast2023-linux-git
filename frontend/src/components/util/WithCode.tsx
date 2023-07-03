@@ -16,4 +16,6 @@ const WithCode: React.FC<WithCodeProps> = props => {
 	return <>{...nodes}</>;
 }
 
+WithCode.displayName = 'WithCode';
+
 export default WithCode;

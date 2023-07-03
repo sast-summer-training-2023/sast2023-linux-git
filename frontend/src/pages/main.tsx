@@ -43,4 +43,6 @@ const main: React.FC = () => {
 	);
 }
 
+main.displayName = 'main';
+
 export default main;

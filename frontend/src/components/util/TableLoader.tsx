@@ -15,4 +15,6 @@ const TableLoader: React.FC<TableLoaderProps> = props => {
 	);
 }
 
+TableLoader.displayName = 'TableLoader';
+
 export default TableLoader;

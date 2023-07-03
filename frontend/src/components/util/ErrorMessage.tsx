@@ -23,4 +23,6 @@ const ErrorMessage: React.FC<ErrorMessageProps> = props => {
 	);
 }
 
+ErrorMessage.displayName = 'ErrorMessage';
+
 export default ErrorMessage;

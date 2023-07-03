@@ -140,4 +140,6 @@ const StandingsTable: React.FC<StandingsTableProps> = props => {
 	);
 }
 
+StandingsTable.displayName = 'StandingsTable';
+
 export default StandingsTable;

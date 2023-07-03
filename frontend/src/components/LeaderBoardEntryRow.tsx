@@ -50,4 +50,6 @@ const LeaderBoardEntryRow: React.FC<LeaderBoardEntryRowProps> = props => {
 	)
 }
 
+LeaderBoardEntryRow.displayName = 'LeaderBoardEntryRow';
+
 export default LeaderBoardEntryRow;

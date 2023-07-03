@@ -27,4 +27,6 @@ const Pagination: React.FC<PaginationProps> = props => {
 	);
 };
 
+Pagination.displayName = 'Pagination';
+
 export default Pagination;
