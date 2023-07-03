@@ -35,18 +35,11 @@
 		"comment": ""
 	},
 	{
-		"name": "Globs",
-		"flag": "7",
-		"score": 1,
-		"category": "Linux",
-		"comment": ""
-	},
-	{
 		"name": "Homeless",
-		"flag": "8",
+		"flag": "WANDERING-USER",
 		"score": 1,
 		"category": "Linux",
-		"comment": ""
+		"comment": "在 `/etc/passwd` 中可以找到系统中所有注册过的用户，在其中可以发现 sast2023{WANDERING-USER}。"
 	},
 	{
 		"name": "Hidden",
