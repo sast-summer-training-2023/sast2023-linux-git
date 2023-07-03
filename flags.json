@@ -49,11 +49,11 @@
 		"comment": ""
 	},
 	{
-		"name": "Heredoc",
-		"flag": "9",
+		"name": "Hidden",
+		"flag": "hidden-files-are-starting-with-a-dot",
 		"score": 1,
 		"category": "Linux",
-		"comment": ""
+		"comment": "Linux 的隐藏文件/目录通过其名称是否以 '.' 开头区分；使用 `ls -a` 可以查看所有以 '.' 开头的隐藏文件/目录。"
 	},
 	{
 		"name": "Proxies",

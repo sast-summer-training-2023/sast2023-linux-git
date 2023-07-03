@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cat <<'EOF'
+Hello! You must know that, the [33mvisibility[0m file in Linux are distinguished by
+  whether its filename starting with a dot [33m'.'[0m, yeah?
+
+The flag is sast2023{hidden-files-are-starting-with-a-dot}.
+EOF
