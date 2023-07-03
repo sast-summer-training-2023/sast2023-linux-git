@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 
 	cout << "\x1b[1;35m======== Task 3: Redirection ========\x1b[0m\n";
 	cout << "This task is slightly easier than the previous two.\n";
-	cout << "I am very shy, so I dare not tell you the flag face-to-face (in console), so I want you to redirect my output to a file named `\x1b[36mflag.txt\x1b[0m`. Can you do it?\n";
+	cout << "I am very shy, so I dare not tell you the flag face-to-face (in console), so I want you to redirect my output to a file named '\x1b[36mflag.txt\x1b[0m'. Can you do it?\n";
 
 	if (stdout_fn == "flag.txt") {
 		uint8_t ret[32];

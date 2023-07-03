@@ -11,7 +11,7 @@
 		"flag": "SHELL-BASIC-SKILLS",
 		"score": 2,
 		"category": "Linux",
-		"comment": "(redirection, ulimit)"
+		"comment": "Task 1：将文件所在目录添加至 PATH，或干脆将可执行文件移至 PATH 所在目录；Task 2：ulimit -s unlimited；Task 3：envir > flags.txt。"
 	},
 	{
 		"name": "Text Process",
@@ -21,18 +21,11 @@
 		"comment": ":%s/\\[//g :%s/pr/IN/g :%s/\\]//g :%s/\\cqu/st/g /sast2023{"
 	},
 	{
-		"name": "Archives",
-		"flag": "4",
+		"name": "`find` & `wc`",
+		"flag": "24615-LINES-IN-TOTAL",
 		"score": 1,
 		"category": "Linux",
-		"comment": ""
-	},
-	{
-		"name": "`find`",
-		"flag": "5",
-		"score": 1,
-		"category": "Linux",
-		"comment": ""
+		"comment": "find src '(' -name '*.cpp' -o -name '*.h' ')' -size +3k -exec wc {} +"
 	},
 	{
 		"name": "`file`",
