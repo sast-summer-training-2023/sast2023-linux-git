@@ -2,56 +2,56 @@
 	{
 		"name": "Linux",
 		"flag": "ConCurrency",
-		"score": 3,
+		"score": 7,
 		"category": "Linux",
 		"comment": "先使用 chmod +x linux 给文件执行权限，然后使用 tmux 新开一个 session 后台执行，Ctrl + B ~ d 将其脱离 (detach)。等待 20 ~ 30 分钟后使用 tmux attach 重新回到原 session 即可看到 flag。"
 	},
 	{
 		"name": "Envir",
 		"flag": "SHELL-BASIC-SKILLS",
-		"score": 2,
+		"score": 7,
 		"category": "Linux",
 		"comment": "Task 1：将文件所在目录添加至 PATH，或干脆将可执行文件移至 PATH 所在目录；Task 2：ulimit -s unlimited；Task 3：envir > flags.txt。"
 	},
 	{
 		"name": "Text",
 		"flag": "Tekst_Process_practice_IN_termINal",
-		"score": 1,
+		"score": 7,
 		"category": "Linux",
 		"comment": ":%s/\\[//g :%s/pr/IN/g :%s/\\]//g :%s/\\cqu/st/g /sast2023{"
 	},
 	{
 		"name": "Ripes",
 		"flag": "24615-LINES-IN-TOTAL",
-		"score": 1,
+		"score": 9,
 		"category": "Linux",
 		"comment": "find src '(' -name '*.cpp' -o -name '*.h' ')' -size +3k -exec wc {} +"
 	},
 	{
 		"name": "Classification",
 		"flag": "sorting-out-is-a-good-habit",
-		"score": 1,
+		"score": 12,
 		"category": "Linux",
 		"comment": "使用 file 获取文件类型，然后使用 cut 等命令截取文件名列表，使用 mv/rename 重命名对应的文件，重复 16 次。"
 	},
 	{
 		"name": "Homeless",
 		"flag": "WANDERING-USER",
-		"score": 1,
+		"score": 4,
 		"category": "Linux",
 		"comment": "在 `/etc/passwd` 中可以找到系统中所有注册过的用户，在其中可以发现 sast2023{WANDERING-USER}。"
 	},
 	{
 		"name": "Hidden",
 		"flag": "hidden-files-are-starting-with-a-dot",
-		"score": 1,
+		"score": 4,
 		"category": "Linux",
 		"comment": "Linux 的隐藏文件/目录通过其名称是否以 '.' 开头区分；使用 `ls -a` 可以查看所有以 '.' 开头的隐藏文件/目录。"
 	},
 	{
 		"name": "Proxy",
 		"flag": "Be_CAREFUL_using_PROXIES",
-		"score": 1,
+		"score": 7,
 		"category": "Linux",
 		"comment": "curl -vix http://59.66.131.240:<port2>/ http://59.66.131.240:<port1>/flag",
 		"comment2": "http_proxy=http://59.66.131.240:<port2> curl -vi http://59.66.131.240:<port1>/flag"
@@ -59,9 +59,16 @@
 	{
 		"name": "Apt",
 		"flag": "HelloTUNA!",
-		"score": 1,
+		"score": 4,
 		"category": "Linux",
 		"comment": "查阅 /etc/apt/sources.list 文件即可找到。"
+	},
+	{
+		"name": "Remotes & Branches",
+		"flag": "",
+		"score": 1,
+		"category": "Git",
+		"comment": ""
 	},
 	{
 		"name": "Culprit",

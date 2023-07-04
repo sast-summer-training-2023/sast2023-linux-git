@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 	if (isatty(1)) std::getline(cin, s);
 
 	cout << "\x1b[1;35m======== Task 2: Stack limit ========\x1b[0m\n"
-			"I will run a stack-consuming program soon, it may cause a \"Stack Overflow\" later, could you please give me a larger stack size?\n"
+			"I will run a stack-consuming algorithm soon, it may cause a \"Stack Overflow\" later, could you please give me a larger stack size?\n"
 			"Recall how to make a larger stack size in Linux.\n"
 			"If you make sure the stack size is sufficient, please press enter." << endl;
 	if (isatty(1)) std::getline(cin, s);
