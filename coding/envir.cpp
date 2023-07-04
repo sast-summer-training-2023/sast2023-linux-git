@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
 		};
 		for (int i = 0; i < 32; ++i) ret[i] ^= flag[i];
 
-		cout << "Congratulations! The flags is " << ret << ".\n";
+		cout << "Congratulations! The flag is " << ret << ".\n";
 	}
 
 	return 0;

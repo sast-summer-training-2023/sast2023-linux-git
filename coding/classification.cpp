@@ -25,7 +25,6 @@ bool check_finish(uint8_t *ret) {
 		SHA512_Final(ret, &ctx);
 		return true;
 	} catch (const filesystem_error &) {
-		cout << "err\n";
 		return false;
 	}
 }
@@ -49,7 +48,7 @@ int main() {
 		for (int i = 0; i < 64; ++i) ret[i] ^= flag[i];
 
 		if (std::count(ret + 40, ret + 64, 0) == 24) {
-			cout << "Wow, you actually filled in ALLLLLL the extensions! I'm SOOOOOO grateful for all you've done! The flags is " << ret << ".\n";
+			cout << "Wow, you actually filled in ALLLLLL the extensions! I'm SOOOOOO grateful for all you've done! The flag is " << ret << ".\n";
 			return 0;
 		}
 	}
@@ -60,7 +59,7 @@ int main() {
 	if (isatty(1)) std::getline(cin, s);
 
 	cout << "Thank you extremely much for your kindness! I will give you a flag in return after your classification!\n"
-			"I may be a little weak, but I'm going to help you in anyway I can!\n"
+			"I may be a little weak, but I'm going to help you in any way I can!\n"
 			"\n"
 			"  1) Unzip the archive to a folder named '\x1b[33mmess\x1b[0m' in the same directory as this file (\x1b[33m./classification\x1b[0m).\n"
 			"    In detail, the directory structure should be as follows:\n"
