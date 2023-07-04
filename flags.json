@@ -29,10 +29,10 @@
 	},
 	{
 		"name": "`file`",
-		"flag": "6",
+		"flag": "sorting-out-is-a-good-habit",
 		"score": 1,
 		"category": "Linux",
-		"comment": ""
+		"comment": "使用 file 获取文件类型，然后使用 cut 等命令截取文件名列表，使用 mv/rename 重命名对应的文件，重复 16 次。"
 	},
 	{
 		"name": "Homeless",
@@ -74,7 +74,7 @@
 		"flag": "c7w&abmfy&cmh&icera_tql",
 		"score": 1,
 		"category": "Bonus",
-		"comment": "根据去年的经验（雾），将 file 任务中所得的图像文件通过 scp 拷贝到本地，观察图片 (表情包) 即可得到 flag。"
+		"comment": "根据去年的经验（雾），将 file 任务中所得到的 bonus1.png 通过 scp 拷贝到本地，观察图片 (表情包) 即可得到 flag。"
 	},
 	{
 		"name": "Bonus 2",

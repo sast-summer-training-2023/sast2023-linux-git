@@ -1,12 +1,14 @@
 // g++ envir.cpp -o envir -O2 -I/usr/local/openssl/include -L/usr/local/openssl/lib -lcrypto -std=c++17
 // clang++ envir.cpp -o envir -O2 -I/usr/local/quictls/include -L/usr/local/quictls/lib -lcrypto -std=c++17
 #include "sha256.h"
-#include <algorithm>
-#include <cstring>
-#include <iostream>
-#include <random>
 #include <libgen.h>
 #include <unistd.h>
+#include <algorithm>
+#include <cstring>
+#include <filesystem>
+#include <iostream>
+#include <random>
+#include <string>
 using std::cin, std::cout, std::endl, std::string;
 
 std::mt19937 gen;
@@ -24,12 +26,12 @@ uint64_t work(uint64_t x, uint64_t y) {
 }
 
 string get_stdout_fn() {
-	char buf[512];
-	uint32_t ret = readlink("/proc/self/fd/1", buf, sizeof buf);
-	if (ret - 1u >= 511u) return string();
-
-	buf[ret] = 0;
-	return basename(buf);
+	using namespace std::filesystem;
+	try {
+		return read_symlink("/proc/self/fd/1").filename();
+	} catch (const filesystem_error &) {
+		return string();
+	}
 }
 
 int main(int argc, char *argv[]) {
@@ -38,35 +40,35 @@ int main(int argc, char *argv[]) {
 	string s;
 	string stdout_fn = get_stdout_fn();
 
-	cout << "In this task, we hope you do the following three things (to make up an intelligent environment !).\n";
-	cout << "After you succeed to do these, you will be given a flag.\n";
-	cout << "\x1b[37mPress enter to continue ...\x1b[0m" << endl;
+	cout << "In this task, we hope you do the following three things (to make up an intelligent environment !).\n"
+			"After you succeed to do these, you will be given a flag.\n"
+			"\x1b[37mPress enter to continue ...\x1b[0m" << endl;
 	if (isatty(1)) std::getline(cin, s);
 
-	cout << "\x1b[1;35m======== Task 1: Environment Variable ========\x1b[0m\n";
-	cout << "I want you to directly call 'envir' to invoke this program instead of './envir' or others.\n";
-	cout << "Can you meet my requirements?\n";
+	cout << "\x1b[1;35m======== Task 1: Environment Variable ========\x1b[0m\n"
+			"I want you to directly call 'envir' to invoke this program instead of './envir' or others.\n"
+			"Can you meet my requirements?\n";
 
 	if (strcmp(*argv, "envir")) return 1;
 
-	cout << "\x1b[32mPretty good! It seems that you DID call me by 'envir'\x1b[0m. Probably you know something about \x1b[36mPATH\x1b[0m and other environment variables.\n";
-	cout << "\x1b[37mPress enter to continue ...\x1b[0m" << endl;
+	cout << "\x1b[32mPretty good! It seems that you DID call me by 'envir'\x1b[0m. Probably you know something about \x1b[36mPATH\x1b[0m and other environment variables.\n"
+			"\x1b[37mPress enter to continue ...\x1b[0m" << endl;
 	if (isatty(1)) std::getline(cin, s);
 
-	cout << "\x1b[1;35m======== Task 2: Stack limit ========\x1b[0m\n";
-	cout << "I will run a stack-consuming program soon, it may cause a \"Stack Overflow\" later, could you please give me a larger stack size?\n";
-	cout << "Recall how to make a larger stack size in Linux.\n";
-	cout << "If you make sure the stack size is sufficient, please press enter." << endl;
+	cout << "\x1b[1;35m======== Task 2: Stack limit ========\x1b[0m\n"
+			"I will run a stack-consuming program soon, it may cause a \"Stack Overflow\" later, could you please give me a larger stack size?\n"
+			"Recall how to make a larger stack size in Linux.\n"
+			"If you make sure the stack size is sufficient, please press enter." << endl;
 	if (isatty(1)) std::getline(cin, s);
 
 	uint64_t result = work(10000000, 1); // 0x70e30a12d31974f2
-	cout << "\x1b[32mThanks for your stack\x1b[0m! I believe you used `\x1b[36mulimit -s unlimited\x1b[0m`!\n";
-	cout << "\x1b[37mPress enter to continue ...\x1b[0m" << endl;
+	cout << "\x1b[32mThanks for your stack\x1b[0m! I believe you used `\x1b[36mulimit -s unlimited\x1b[0m`!\n"
+			"\x1b[37mPress enter to continue ...\x1b[0m" << endl;
 	if (isatty(1)) std::getline(cin, s);
 
-	cout << "\x1b[1;35m======== Task 3: Redirection ========\x1b[0m\n";
-	cout << "This task is slightly easier than the previous two.\n";
-	cout << "I am very shy, so I dare not tell you the flag face-to-face (in console), so I want you to redirect my output to a file named '\x1b[36mflag.txt\x1b[0m'. Can you do it?\n";
+	cout << "\x1b[1;35m======== Task 3: Redirection ========\x1b[0m\n"
+			"This task is slightly easier than the previous two.\n"
+			"I am very shy, so I dare not tell you the flag face-to-face (in console), so I want you to redirect my output to a file named '\x1b[33mflag.txt\x1b[0m'. Can you do it?\n";
 
 	if (stdout_fn == "flag.txt") {
 		uint8_t ret[32];

@@ -4,9 +4,9 @@ cat <<'EOF'
 In this task, you need to find the hidden flag in a text file 'cipher.txt'.
 
 To decode the flag, please do the following three operations in order:
-  1) Remove all the occurrences of [33m'['[0m
-  2) Replace all the occurrences of [33m'pr'[0m (only lowercase) to '[33mIN'[0m
-  3) Remove all the occurrences of [33m']'[0m
-  4) Replace all the occurrences of [33m'qu'[0m (regardless uppercase or lowercase) to [33m'st'[0m
+  1) Remove all the occurrences of [33m'['[0m.
+  2) Replace all the occurrences of [33m'pr'[0m (only lowercase) to '[33mIN'[0m.
+  3) Remove all the occurrences of [33m']'[0m.
+  4) Replace all the occurrences of [33m'qu'[0m (regardless uppercase or lowercase) to [33m'st'[0m.
   5) After these steps, find your flag!
 EOF
