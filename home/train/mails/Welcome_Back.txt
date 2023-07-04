@@ -1,0 +1,17 @@
+From: Nana (KawaiiNana@Zeus.me)
+To: Train (Trainee@Zeus.me)
+Time: 01/07/23 12:00 +08:00
+
+Title: Welcome Back
+Content:
+
+    Long time no see! It has been a while since you last logged in onto this server.
+
+    For security issue, I temporally removed u from the sudo group. But since u're back now, I think it's ok to let u back in control.
+
+    The only problem is that I forget how to set u as a sudoer. So u can use mine for now, my password is KawaiiNana_123.
+
+    Hope u enjoy ur time here!
+
+Nana
+01/07/2023

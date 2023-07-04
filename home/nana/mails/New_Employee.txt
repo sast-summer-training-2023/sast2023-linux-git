@@ -1,0 +1,15 @@
+From: HR (HumanResource@Zeus.me)
+To: Nana (KawaiiNana@Zeus.me)
+Time: 01/07/23 12:00 +08:00
+
+Title: New Employee
+Content:
+
+    Since Trainee (ID #10479) was found XXXXXXX in the task XXXXXX at 07/07/22 03:21 +08:00, we gonna send you a new employee Trainee (ID #10480).
+
+    You two have met each other months ago. Well, PLEASE DO NOT LET THE FAILURE like last time HAPPEN AGAIN.
+
+    You could give your account to #10480. Don't worry, our security system won't let him touch the core of the server.
+
+HR
+01/07/2023
