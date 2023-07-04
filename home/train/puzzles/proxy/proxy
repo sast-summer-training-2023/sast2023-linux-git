@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat <<'EOF'
+The flag is right at [36mhttp://59.66.131.240:233/flag[0m, go and check it out!
+EOF

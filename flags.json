@@ -49,11 +49,12 @@
 		"comment": "Linux 的隐藏文件/目录通过其名称是否以 '.' 开头区分；使用 `ls -a` 可以查看所有以 '.' 开头的隐藏文件/目录。"
 	},
 	{
-		"name": "Proxies",
-		"flag": "10",
+		"name": "Proxy",
+		"flag": "Be_CAREFUL_using_PROXIES",
 		"score": 1,
 		"category": "Linux",
-		"comment": ""
+		"comment": "curl -vix http://59.66.131.240:<port2>/ http://59.66.131.240:<port1>/flag",
+		"comment2": "http_proxy=http://59.66.131.240:<port2> curl -vi http://59.66.131.240:<port1>/flag"
 	},
 	{
 		"name": "Apt",
