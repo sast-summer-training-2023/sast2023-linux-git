@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat <<'EOF'
+What does [35mUbuntu[0m use as a "package manager"? How to replace a faster mirror in it?
+EOF

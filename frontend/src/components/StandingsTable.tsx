@@ -7,7 +7,6 @@ import LeaderBoardEntryRow from './LeaderBoardEntryRow';
 import Pagination from './util/Pagination';
 import ProgressGradient from './util/ProgressGradient';
 import TableLoader from './util/TableLoader';
-import WithCode from './util/WithCode';
 
 interface StandingsTableProps {
 	readonly board: LeaderBoard | null;
@@ -89,9 +88,7 @@ const StandingsTable: React.FC<StandingsTableProps> = props => {
 							</Table.HeaderCell>
 							{
 								props.board?.categories.map(({ name, flags }, idx) =>
-									<Table.HeaderCell key={idx} colSpan={flags.length}>
-										<WithCode content={name} />
-									</Table.HeaderCell>
+									<Table.HeaderCell key={idx} colSpan={flags.length}>{name}</Table.HeaderCell>
 								)
 							}
 						</Table.Row>
@@ -105,13 +102,17 @@ const StandingsTable: React.FC<StandingsTableProps> = props => {
 										sorted={sortFunction[0] === SORT_BY_PART[idx] ? (sortReverse ? 'ascending' : 'descending') : undefined}
 										onClick={() => handleSort(SORT_BY_PART[idx])}
 									>
-										<WithCode content={name} />
+										{name}
 										<br />
-										<span className="prompt">(count: <ProgressGradient
-											content={count.toString()}
-											cur={count}
-											max={props.board!.data.length}
-										/>)</span>
+										<span className="prompt">
+											{'(count: '}
+											<ProgressGradient
+												content={count.toString()}
+												cur={count}
+												max={props.board!.data.length}
+											/>
+											)
+										</span>
 									</Table.HeaderCell>
 								)
 							}

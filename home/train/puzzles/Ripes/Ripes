@@ -4,7 +4,7 @@ cat <<'EOF'
 In this task, you are given a git repository named 'Ripes' in zip form (Ripes.zip).
 
 We want you compute some statistics of this project.
-  1) First, we only consider files in [33m'./src'[0m directory.
+  1) First, we only consider files in '[33m./src[0m' directory.
   2) Then we need to screen (filter) only CPP files (*.cpp, *.h), not others (e.g., *.json, *.txt, *.ui).
   3) After that please take files that is greater than 3 KiB (3072 B).
   4) Over all these files, please compute the [1;33mtotal line number[0m (add up).

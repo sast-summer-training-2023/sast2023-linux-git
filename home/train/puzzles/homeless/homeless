@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cat <<'EOF'
+Believe it or not, it is said that there is a homeless man on this server.
+[37m(hint: try to find some files containing all users in the system)[0m
+
+EOF

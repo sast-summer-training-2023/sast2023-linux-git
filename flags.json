@@ -1,34 +1,34 @@
 [
 	{
-		"name": "`chmod` & `tmux`",
+		"name": "Linux",
 		"flag": "ConCurrency",
 		"score": 3,
 		"category": "Linux",
 		"comment": "先使用 chmod +x linux 给文件执行权限，然后使用 tmux 新开一个 session 后台执行，Ctrl + B ~ d 将其脱离 (detach)。等待 20 ~ 30 分钟后使用 tmux attach 重新回到原 session 即可看到 flag。"
 	},
 	{
-		"name": "Environment",
+		"name": "Envir",
 		"flag": "SHELL-BASIC-SKILLS",
 		"score": 2,
 		"category": "Linux",
 		"comment": "Task 1：将文件所在目录添加至 PATH，或干脆将可执行文件移至 PATH 所在目录；Task 2：ulimit -s unlimited；Task 3：envir > flags.txt。"
 	},
 	{
-		"name": "Text Process",
+		"name": "Text",
 		"flag": "Tekst_Process_practice_IN_termINal",
 		"score": 1,
 		"category": "Linux",
 		"comment": ":%s/\\[//g :%s/pr/IN/g :%s/\\]//g :%s/\\cqu/st/g /sast2023{"
 	},
 	{
-		"name": "`find` & `wc`",
+		"name": "Ripes",
 		"flag": "24615-LINES-IN-TOTAL",
 		"score": 1,
 		"category": "Linux",
 		"comment": "find src '(' -name '*.cpp' -o -name '*.h' ')' -size +3k -exec wc {} +"
 	},
 	{
-		"name": "`file`",
+		"name": "Classification",
 		"flag": "sorting-out-is-a-good-habit",
 		"score": 1,
 		"category": "Linux",
@@ -56,7 +56,7 @@
 		"comment": ""
 	},
 	{
-		"name": "TUNA",
+		"name": "Apt",
 		"flag": "HelloTUNA!",
 		"score": 1,
 		"category": "Linux",
@@ -74,7 +74,7 @@
 		"flag": "c7w&abmfy&cmh&icera_tql",
 		"score": 1,
 		"category": "Bonus",
-		"comment": "根据去年的经验（雾），将 file 任务中所得到的 bonus1.png 通过 scp 拷贝到本地，观察图片 (表情包) 即可得到 flag。"
+		"comment": "根据去年的经验（雾），将 classification 任务中所得到的 bonus1.png 通过 scp 拷贝到本地，观察图片 (表情包) 即可得到 flag。"
 	},
 	{
 		"name": "Bonus 2",
