@@ -5,7 +5,7 @@ Time: 01/07/23 12:00 +08:00
 Title: New Employee
 Content:
 
-    Since Trainee (ID #10479) was found XXXXXXX in the task XXXXXX at 07/07/22 03:21 +08:00, we gonna send you a new employee Trainee (ID #10480).
+    Since Trainee (ID #10479) was found XXXXXXX in the task XXXXXX at 01/07/23 12:00 +08:00, we gonna send you a new employee Trainee (ID #10480).
 
     You two have met each other months ago. Well, PLEASE DO NOT LET THE FAILURE like last time HAPPEN AGAIN.
 

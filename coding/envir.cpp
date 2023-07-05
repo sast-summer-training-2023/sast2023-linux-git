@@ -1,7 +1,6 @@
 // g++ envir.cpp -o envir -O2 -I/usr/local/openssl/include -L/usr/local/openssl/lib -lcrypto -std=c++17
 // clang++ envir.cpp -o envir -O2 -I/usr/local/quictls/include -L/usr/local/quictls/lib -lcrypto -std=c++17
 #include "sha256.h"
-#include <libgen.h>
 #include <unistd.h>
 #include <algorithm>
 #include <cstring>
