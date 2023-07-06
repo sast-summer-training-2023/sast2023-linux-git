@@ -4,3 +4,5 @@
 	bare = false
 	logallrefupdates = true
 	precomposeunicode = true
+[bonus2]
+	bonus2 = sast2023{917-config}
