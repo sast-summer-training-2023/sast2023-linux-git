@@ -14,7 +14,7 @@
 		"eslint": "^8.44.0",
 		"eslint-plugin-react": "^7.32.2",
 		"patch-package": "^7.0.0",
-		"rollup": "^3.26.0",
+		"rollup": "^3.26.1",
 		"rollup-plugin-esbuild": "^5.0.0",
 		"rollup-plugin-external-globals": "^0.8.0"
 	},

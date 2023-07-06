@@ -4,7 +4,7 @@
 		"flag": "ConCurrency",
 		"score": 7,
 		"category": "Linux",
-		"comment": "先使用 chmod +x linux 给文件执行权限，然后使用 tmux 新开一个 session 后台执行，Ctrl + B ~ d 将其脱离 (detach)。等待 20 ~ 30 分钟后使用 tmux attach 重新回到原 session 即可看到 flag。"
+		"comment": "使用 tmux 新开一个 session 后台执行，Ctrl + B ~ d 将其脱离 (detach)。等待 20 ~ 30 分钟后使用 tmux attach 重新回到原 session 即可看到 flag。"
 	},
 	{
 		"name": "Envir",
@@ -37,14 +37,14 @@
 	{
 		"name": "Homeless",
 		"flag": "WANDERING-USER",
-		"score": 5,
+		"score": 3,
 		"category": "Linux",
 		"comment": "在 `/etc/passwd` 中可以找到系统中所有注册过的用户，在其中可以发现 sast2023{WANDERING-USER}。"
 	},
 	{
 		"name": "Hidden",
 		"flag": "hidden-files-are-starting-with-a-dot",
-		"score": 5,
+		"score": 3,
 		"category": "Linux",
 		"comment": "Linux 的隐藏文件/目录通过其名称是否以 '.' 开头区分；使用 `ls -a` 可以查看所有以 '.' 开头的隐藏文件/目录。"
 	},
@@ -59,7 +59,7 @@
 	{
 		"name": "Apt",
 		"flag": "HelloTUNA!",
-		"score": 5,
+		"score": 4,
 		"category": "Linux",
 		"comment": "查阅 /etc/apt/sources.list 文件即可找到。"
 	},
@@ -69,6 +69,13 @@
 		"score": 5,
 		"category": "Git",
 		"comment": "git branch 查看所有分支即可找到。"
+	},
+	{
+		"name": "Message",
+		"flag": "commit-message-should-be-standarized",
+		"score": 5,
+		"category": "Git",
+		"comment": "git show 查看根提交 c9af339 的提交信息即可找到。"
 	},
 	{
 		"name": "History",
