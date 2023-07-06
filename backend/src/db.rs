@@ -12,7 +12,7 @@ pub async fn init_db() -> DBWrapper {
     let mut config = tokio_postgres::Config::new();
     let (client, connection) = config
         .host_path("/tmp")
-        .user("test")
+        .user("postgres")
         .dbname("postgres")
         .connect(tokio_postgres::NoTls)
         .await

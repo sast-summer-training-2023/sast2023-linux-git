@@ -53,8 +53,8 @@
 		"flag": "Be_CAREFUL_using_PROXIES",
 		"score": 7,
 		"category": "Linux",
-		"comment": "curl -vix http://59.66.131.240:<port2>/ http://59.66.131.240:<port1>/flag",
-		"comment2": "http_proxy=http://59.66.131.240:<port2> curl -vi http://59.66.131.240:<port1>/flag"
+		"comment": "curl -vix http://59.66.131.240:50001/ http://59.66.131.240:50000/flag",
+		"comment2": "http_proxy=http://59.66.131.240:50001 curl -vi http://59.66.131.240:50000/flag"
 	},
 	{
 		"name": "Apt",

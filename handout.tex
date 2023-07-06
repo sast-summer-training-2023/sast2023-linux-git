@@ -88,7 +88,7 @@ ssh train@59.66.131.240 -p <port>
 		\item 运行 \texttt{\textcolor{gray}{sudo} services ssh \textcolor{red}{reload}} 重新读取配置。
 	\end{itemize}
 
-	\subsection{CTF --- 介绍}
+	\subsection{CTF --- 简介}
 
 	为保证趣味性，我们沿用之前几届的传统，采用 CTF (\href{https://en.wikipedia.org/wiki/Capture_the_flag_(cybersecurity)}{Capture the Flag}) 的形式进行。你需要在服务器环境中寻找格式形如 \textcolor{fuchsia}{\texttt{sast2023\{*******\}}} 的字符串，其中 \texttt{*******} 可以包含任何非空白 ASCII 可见字符。我们将这种字符串称为 ``flag''。每当你找到一个 ``flag''。你就可以通过 \ref{sss:ctfsubmit} 中介绍的提交方式进行提交。\cite{sast2022-linux}
 
@@ -99,22 +99,29 @@ ssh train@59.66.131.240 -p <port>
 
 	不提供额外的提交程序，请使用命令行发送网络请求的方式进行提交。推荐使用 \texttt{curl}。
 
-	提交的命令如下 (尖括号 \texttt< \texttt> \textbf{不}输入，花括号 \texttt\{ \texttt\} \textbf{要}输入)：
+	提交的命令如下 (尖括号 \textcolor{maroon}{\texttt< \texttt> \textbf 不}输入，花括号 \textcolor{maroon}{\texttt\{ \texttt\} \textbf 要}输入)：
 
 	\begin{minted}[frame=single,linenos=true,rulecolor=blue,escapeinside=||]{shell}
-curl -d 'id=<你的学号>' -d 'flag=sast2023{*******}' http://59.66.131.240:/* TODO *//submit
+curl -d 'id=<你的学号>' -d 'flag=sast2023{*******}' http://59.66.131.240:50000/submit
+	\end{minted}
+
+	\vspace{-6pt}
+	对于如外校等没有学号的用户，可以直接去掉学号一栏，即使用如下命令提交。此时该命令仅用于检测正确性，不提供累积计分与排名功能。
+
+	\begin{minted}[frame=single,linenos=true,rulecolor=blue,escapeinside=||]{shell}
+curl -d 'flag=sast2023{*******}' http://59.66.131.240:50000/submit
 	\end{minted}
 
 	输入该命令后，你的终端会返回你的提交是否有效。简单起见，如果返回以 \texttt{"Success":} 开头说明提交成功，否则会给出对应的错误信息。
 
-	此外，你可以在浏览器直接访问 \url{http://59.66.131.240:/* TODO *//} 查看当前 ``flag'' 的获取情况以及排行榜。排行榜默认按照总分降序排列，同分按最后一次提交时间升序排列。你也可以点击表头更改排序方式。
+	此外，你可以在浏览器直接访问 \url{http://59.66.131.240:50000/} 查看当前 ``flag'' 的获取情况以及排行榜。排行榜默认按照总分降序排列，同分按最后一次提交时间升序排列。你也可以点击表头更改排序方式。
 
 	\subsection{CTF --- 注意事项与 FAQ}
 
 	\begin{itemize}
 		\itemsep0pt
 		\item 所有的 ``flag'' 分为三大区：Linux, Git, Bonus，分别包含 9, 6, 6 个 ``flag''，占总数的 58, 36, 6 分。
-		\item 藏匿的 ``flag'' 会以多种形式出现，\textit{一般而言}，出现格式正确的字符串就是 ``flag''，除非有特殊说明，要求你寻找其中一个特定的' flag (这种现象在 Git 区中比较常见)。
+		\item 藏匿的 ``flag'' 会以多种形式出现，\textit{一般而言}，出现格式正确的字符串就是 ``flag''，除非有特殊说明，要求你寻找其中一个特定的 ``flag'' (这种现象在 Git 区中比较常见)。
 		\item 欢迎与其他人交流讨论思路，以及向 ChatGPT/GPT-4 等工具求助。但请不要直接将 ``flag'' 告诉别人，这样会影响其他人的游戏体验。
 		\item 提交 ``flag'' 的服务器和分配给你的服务器是同一个服务器，所以不要尝试做出伤敌一千自损八百的事情。
 		\item 由于\raisebox{-3pt}{\includegraphics{assets/pigeon.pdf}\includegraphics{assets/pigeon.pdf}\includegraphics{assets/pigeon.pdf}}的原因没做复杂的身份验证，所以请只用自己的学号提交 \sout{(真有人喜欢给别人送分吗？)}。
@@ -179,6 +186,7 @@ ssh -p 10000 train@localhost
 		\itemsep0pt
 		\item 该谜题在 ``debug'' 分支下进行。
 		\item ``cat'' 对 \texttt{debug.cpp} 文件修改了很多次，但这些文件产生运行时错误了！``cat'' 想知道，究竟是哪一次提交，使这个程序第一次产生运行时错误呢\footnote{保证存在这样的提交，使得在其之前 \texttt{debug.cpp} 正常运行，它及其它之后均产生运行时错误}？
+		\item \textcolor{gray}{[\textit{该怎么寻找这样的提交呢？二分查找？如何在版本树中进行二分查找？}]}
 		\item \textbf{\textcolor{properpurple}{只有这个提交正文里的 ``flag'' 才是真正的 ``flag'' 哦！}}
 	\end{itemize}
 
