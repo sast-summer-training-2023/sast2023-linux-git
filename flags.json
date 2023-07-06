@@ -37,14 +37,14 @@
 	{
 		"name": "Homeless",
 		"flag": "WANDERING-USER",
-		"score": 4,
+		"score": 5,
 		"category": "Linux",
 		"comment": "在 `/etc/passwd` 中可以找到系统中所有注册过的用户，在其中可以发现 sast2023{WANDERING-USER}。"
 	},
 	{
 		"name": "Hidden",
 		"flag": "hidden-files-are-starting-with-a-dot",
-		"score": 4,
+		"score": 5,
 		"category": "Linux",
 		"comment": "Linux 的隐藏文件/目录通过其名称是否以 '.' 开头区分；使用 `ls -a` 可以查看所有以 '.' 开头的隐藏文件/目录。"
 	},
@@ -59,23 +59,44 @@
 	{
 		"name": "Apt",
 		"flag": "HelloTUNA!",
-		"score": 4,
+		"score": 5,
 		"category": "Linux",
 		"comment": "查阅 /etc/apt/sources.list 文件即可找到。"
 	},
 	{
-		"name": "Remotes & Branches",
-		"flag": "",
-		"score": 1,
+		"name": "Branches",
+		"flag": "git/branches-are-powerful",
+		"score": 4,
 		"category": "Git",
-		"comment": ""
+		"comment": "git branch 查看所有分支即可找到。"
 	},
 	{
-		"name": "Culprit",
-		"flag": "git-BLAME_is_USEFUL_to_find_the_CULPRIT",
-		"score": 1,
+		"name": "History",
+		"flag": "revert_OR_reset",
+		"score": 4,
 		"category": "Git",
-		"comment": ""
+		"comment": "查看历史记录，使用 git revert、git reset、git switch --detach 等均可。"
+	},
+	{
+		"name": "Reflog",
+		"flag": "check-REFLOG-immediately__once-you-make-MISOPERATION",
+		"score": 7,
+		"category": "Git",
+		"comment": "git reflog 找到被 reset 的提交 80d175a，进入即可找到 flag。"
+	},
+	{
+		"name": "Werewolf",
+		"flag": "ybhR3pWRQAZ-xWIARyniG",
+		"score": 7,
+		"category": "Git",
+		"comment": "切换到 werewolf 分支，运行 git blame state，找到 Werewolf 提交的唯一一行。"
+	},
+	{
+		"name": "Debug",
+		"flag": "_fzhRKnKtduIP6_4",
+		"score": 7,
+		"category": "Git",
+		"comment": "切换到 debug 分支，使用 git 的二分查找功能：依次运行 git bisect start; git bisect bad; git bisect good c9af339 (c9af339 是根提交)，找到第一发坏提交 a40ae20 的信息。"
 	},
 	{
 		"name": "Bonus 1",

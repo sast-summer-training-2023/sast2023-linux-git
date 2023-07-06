@@ -1,0 +1,6 @@
+# pack-refs with: peeled fully-peeled sorted 
+b5cbcc5eb4037571ea43222308e51de0043cdc87 refs/heads/debug
+84b5248dac7790b7e8321b72fbd1899f1223e1ef refs/heads/main
+27b03b06ad4887e2284a364c5a7473aeb7c83c13 refs/heads/reflog
+84b5248dac7790b7e8321b72fbd1899f1223e1ef refs/heads/sast2023{git/branches-are-powerful}
+ef6c5080882af71958e16fd5b36ee3bc470c06c7 refs/heads/werewolf

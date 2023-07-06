@@ -1,6 +1,5 @@
 #![feature(let_chains)]
 #![feature(try_blocks)]
-#![feature(vec_into_raw_parts)]
 /*
  * 提交格式：curl -d 'id=2022_stuid' -d 'flag=sast2023{flag}' http://<host>/submit
  * 后端查询：curl -XPOST http://<host>/query (忽略所有请求体)

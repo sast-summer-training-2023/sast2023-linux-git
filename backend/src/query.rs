@@ -37,9 +37,12 @@ pub async fn query(db: &DBWrapper, time: u64) -> Result<QueryResult, String> {
     let mapper = |row: tokio_postgres::Row| -> Option<ResultRow> {
         let id = row.try_get::<_, i32>(0).ok()? as u32;
         let name = row.try_get::<_, String>(1).ok()?;
-        let state = row.try_get::<_, Vec<Option<i64>>>(2).ok()?;
-        let (ptr, len, cap) = state.into_raw_parts();
-        let mut state = unsafe { Vec::from_raw_parts(ptr as *mut Option<u64>, len, cap) };
+        let mut state: Vec<Option<u64>> = row
+            .try_get::<_, Vec<Option<i64>>>(2)
+            .ok()?
+            .into_iter()
+            .map(|opt| opt.map(|i| i as u64))
+            .collect();
 
         state.resize(flags_len, None);
 
