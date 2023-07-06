@@ -30,7 +30,7 @@
 	{
 		"name": "Classification",
 		"flag": "sorting-out-is-a-good-habit",
-		"score": 12,
+		"score": 11,
 		"category": "Linux",
 		"comment": "使用 file 获取文件类型，然后使用 cut 等命令截取文件名列表，使用 mv/rename 重命名对应的文件，重复 16 次。"
 	},
@@ -66,14 +66,14 @@
 	{
 		"name": "Branches",
 		"flag": "git/branches-are-powerful",
-		"score": 4,
+		"score": 5,
 		"category": "Git",
 		"comment": "git branch 查看所有分支即可找到。"
 	},
 	{
 		"name": "History",
 		"flag": "revert_OR_reset",
-		"score": 4,
+		"score": 5,
 		"category": "Git",
 		"comment": "查看历史记录，使用 git revert、git reset、git switch --detach 等均可。"
 	},
@@ -140,12 +140,5 @@
 		"score": 1,
 		"category": "Bonus",
 		"comment": "在我的 GitHub 个人页面 (yhx-12243) 和 git.tsinghua 个人页面 (yu-hx21) 中都可以找到。"
-	},
-	{
-		"name": "Bonus 7",
-		"flag": "custom-TLDR-page",
-		"score": 1,
-		"category": "Bonus",
-		"comment": "tldr sast / tldr sast2023"
 	}
 ]
