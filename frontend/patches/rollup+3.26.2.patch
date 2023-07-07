@@ -1,8 +1,8 @@
 diff --git a/node_modules/rollup/dist/es/shared/node-entry.js b/node_modules/rollup/dist/es/shared/node-entry.js
-index 60f0ce4..0cc551a 100644
+index d9aae31..9a2e361 100644
 --- a/node_modules/rollup/dist/es/shared/node-entry.js
 +++ b/node_modules/rollup/dist/es/shared/node-entry.js
-@@ -17532,8 +17532,9 @@ async function transformChunk(magicString, fileName, usedModules, chunkGraph, op
+@@ -17544,8 +17544,9 @@ async function transformChunk(magicString, fileName, usedModules, chunkGraph, op
              resultingFile = resolve(dir, fileName);
          else
              resultingFile = resolve(fileName);
@@ -13,7 +13,7 @@ index 60f0ce4..0cc551a 100644
          for (let sourcesIndex = 0; sourcesIndex < map.sources.length; ++sourcesIndex) {
              let sourcePath = map.sources[sourcesIndex];
              const sourcemapPath = `${resultingFile}.map`;
-@@ -17668,7 +17669,7 @@ function emitSourceMapAndGetComment(fileName, map, pluginDriver, { sourcemap, so
+@@ -17680,7 +17681,7 @@ function emitSourceMapAndGetComment(fileName, map, pluginDriver, { sourcemap, so
              : sourcemapFileName;
          pluginDriver.emitFile({ fileName: `${fileName}.map`, source: map.toString(), type: 'asset' });
      }
@@ -23,10 +23,10 @@ index 60f0ce4..0cc551a 100644
  
  class Bundle {
 diff --git a/node_modules/rollup/dist/shared/rollup.js b/node_modules/rollup/dist/shared/rollup.js
-index ed37f3a..3bd04e7 100644
+index b474def..8626824 100644
 --- a/node_modules/rollup/dist/shared/rollup.js
 +++ b/node_modules/rollup/dist/shared/rollup.js
-@@ -27071,10 +27071,12 @@ exports.URL_TREATING_MODULE_AS_EXTERNAL_DEPENDENCY = URL_TREATING_MODULE_AS_EXTE
+@@ -27091,10 +27091,12 @@ exports.URL_TREATING_MODULE_AS_EXTERNAL_DEPENDENCY = URL_TREATING_MODULE_AS_EXTE
  exports.URL_WATCH = URL_WATCH;
  exports.blue = blue;
  exports.bold = bold;
