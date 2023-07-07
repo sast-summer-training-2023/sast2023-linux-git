@@ -20,6 +20,8 @@
 
 	\subsection{Introduction}
 
+	\subsubsection{什么是 Linux}
+
 	Linux 是一种自由和开放源码的类 UNIX 操作系统，其内核由 Linus Torvalds 在 1991 年发布。
 
 	Linux 也是自由软件和开放源代码软件发展中最著名的例子，只要遵循 GNU，任何个人和机构都可以自由地使用 Linux 的所有底层源代码，这使得它得到来自全世界软件爱好者和组织的开发支持。
@@ -32,6 +34,34 @@
 		\item 基础设施（红绿灯、工业传感器）。\cite{net9-linux}
 	\end{itemize}
 
+	\subsubsection{发行版}
+
+	我们平时使用的 ``Linux'' 严格来说是 Linux 发行版本，而 Linux 狭义上单指操作系统的内核。
+
+	发行版本在内核的基础上还包括安装工具、系统配置、图形桌面界面、各种 GNU 软件等，使得这个系统能够适用于各种使用目的。
+
+	常见的 Linux 发行版有 Debian、Ubuntu、Fedora、CentOS、Arch Linux 等。不同的发行版使用的软件不同，有些发行版本是设计成专门的目的（比如 Kali 用于网安）。\cite{net9-linux}
+
+	以 Ubuntu 为例，Ubuntu 在每个偶数年的 4 月 (每两年) 发布一个长期支持版 (\textcolor{fuchsia}Long-\textcolor{fuchsia}Term \textcolor{fuchsia}Support)，每 6 个月发布一个版本。
+
+	我们提供的服务器安装的发行版是 Ubuntu 22.04 (LTS)，代号 Jammy Jellyfish。
+
+	\subsubsection{接触 Linux 的方式}
+
+	我们接触 Linux 的方式通常有以下几种：\cite{net9-linux}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item 安装 Linux 系统 (单系统、Windows \& Linux 双系统)；
+		\item WSL (英语：Windows Subsystem for Linux)；
+		\item 虚拟机 (Virtualbox、Docker)；
+		\item 服务器远程连接 (SSH、RDP)；
+	\end{itemize}
+
+	有条件的同学可以给电脑装一个 Linux 系统 (或双系统)，\sout{这样你就能在各种配置中度过一段漫长而有趣的时光了}。
+
+	对于其他同学，Windows 的话推荐使用 \href{https://learn.microsoft.com/zh-cn/windows/wsl/install}{WSL\,2} (毕竟是 Type-1 的虚拟机，有性能支持)，\sout{如果只想要一个终端的话}\linebreak[1]\sout{可以用 Git Bash}；对 Mac\,OS 的话原生的终端就有比较接近的体验 (推荐使用 \href{https://iterm2.com/}{iTerm\,2})，或者使用 Docker。当然有服务器的同学可以直接用各种服务器 (现代的服务器基本都是 Linux)。
+
 	\subsection{课前准备}
 
 	参考链接：
@@ -41,11 +71,252 @@
 		\item \url{https://blog.csdn.net/yushuzhen2008/article/details/104944579}
 	\end{itemize}
 
+	\subsection{GUI, CLI, Shell 和 Terminal}
 
-	\subsection{man 和 tldr}
+	见 \url{https://docs.net9.org/basic/linux/#basic-concepts}。
 
-	\subsection{ssh}
+	\subsection{学习资料}
 
+	网上的 Linux 学习资料非常多，同学们需要善于寻找资源：
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \url{https://docs.net9.org/basic/linux/}\quad\textcolor{red}{$\gets$ \textbf{务必熟读，其中的内容本文不再重复出现}}
+		\item \url{https://www.runoob.com/linux/linux-tutorial.html}
+		\item \url{https://ryanstutorials.net/linuxtutorial/}
+		\item \url{https://missing.csail.mit.edu/}
+	\end{itemize}
+
+	当遇到问题时，要善于利用 Bing、Google 等搜索引擎，以及 \href{https://stackoverflow.com/}{Stack Overflow}、\href{https://stackexchange.com/}{Stack Exchange} 等。当然在 2023 年的今天，ChatGPT/GPT-4 等工具也一直是你的好伙伴 (对于比较基础的问题效果还是很不错的)。
+
+	当然，在遇到不会的命令时，还要养成看文档的习惯，这一部分可以参考 \hyperref[sss:linuxdoc]{\ref*{sss:linuxdoc} 节}。
+
+	\subsection{Shell}
+
+	Shell 是终端编程中常见的 ``语言''，Shell 变成为典型的命令式编程 (区别于声明性编程)，常用于写快餐式的脚本以及充当 ``胶水'' 的作用，\sout{和 Python 比较类似}。
+
+	\subsubsection{Shell 方言}
+
+	Shell 并不是一种固定的语言，而是衍生是许多的方言 (扩展)，如 \texttt{sh} (原生), \texttt{bash}, \texttt{zsh}, \textcolor{gray}{\texttt{dash}, \sout{\texttt{fish}, \texttt{csh}, \texttt{ksh}}} 等。
+
+	比较常见的是 Bash (Ubuntu 默认) 和 Z shell (zsh, Mac\,OS 默认)。当然这些 shell 自身也会有相对应的扩展，比如服务器上默认安装的 Z shell 扩展 \href{https://ohmyz.sh/}{``Oh My Zsh''}。
+
+	通过 \texttt{type} 命令\footnote{有些教程用建议使用 \texttt{which} 命令，但是在有一些 Shell (Sh 和 Bash) 中 \texttt{which} 是\Emm{外部命令}，因此无法查阅如 \texttt{if} 等\Emm{内部命令}。而 \texttt{type} 在常见的 Sh, Bash, Z shell 中均为内部命令，可以查询到所有命令的信息。}可见\textcolor{red}{形如 \texttt{cd}, \texttt{if}, \texttt{pwd}, \texttt{alias}, \texttt{setopt}/\texttt{shopt} 等命令返回了 ``shell 内建''/``shell 关键字''，它们统称\Emm{内部命令}；而形如 \texttt{ls}, \texttt{wc}, \texttt{ps}, \texttt{cp}, \texttt{find}, \texttt{mkdir}, \texttt{sudo} 等命令会返回一个对应文件所在的路径，它们统称\Emm{外部命令}}\footnote{实际上还有别名，函数等形式，可以使用 \texttt{type -w} (Bash 中为 \texttt{type -t}) 来查看类别。}。% type -w ls cd wc tc if none
+
+	\begin{itemize}
+		\item \Emm{内部命令}是嵌入在各个 Shell 中的 (写在对应的源码里)，\sout{就像你们写 Shell 大作业时的一堆 if/else 里讨论的命令}，\textcolor{green!80!black}{不创建新进程，执行速度较快}，缺点是\textcolor{red}{不同的 Shell 的实现可能会不一样，就是说方言可能会比较多}。
+		\item \Emm{外部命令}是 Linux 系统中独立存在的外部程序，\textcolor{green!80!black}{由于是外部程序，因此在所有 Shell 看来表现几乎一样}，\textcolor{red}{调用时会创建新的子进程}。
+
+			当输入文件名为一个标识符时，Shell 通常不会解析为相对路径，而是解析为命令，然后按照内部优先，外部其次的顺序进行查找。其中外部命令的查找会根据 \texttt{PATH} 环境变量\textit{按顺序依次查找}。
+
+			具体的优先级可以使用 \texttt{type -a <command>} 来查看，以得知有哪些结果被覆盖。
+	\end{itemize}
+
+	\subsection{在 Linux 中查文档}
+	\label{sss:linuxdoc}
+
+	在 Linux 以及之后的各种工作中，查文档是必不可少的技能。除上网查询外，Shell 中查文档的方法主要有如下几种：
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{<command> --help}，\textbf{只能用于 (文档良好的) 外部命令} (大多数外部命令都有良好的文档)。
+		\item \texttt{help <command>}，\textbf{Bash 中查询内部命令的方式}。
+		\color{red}\item \texttt{man <command>}，比较通用，\textbf{非常牛逼，非常详细，而且通常由官方撰写的命令手册}，强烈推荐使用！
+
+			\normalcolor\texttt{man man} 可以查询 \texttt{man} 的使用方式，\sout{没想到吧，这就叫元学习！}
+
+			所有这些手册 (\texttt{man}ual) 分为 9 类\cite{man-man}：
+			\begin{enumerate}
+				\item 可执行程序或 shell 命令；
+				\item 系统调用 (内核提供的函数)；
+				\item 库调用 (程序库中的函数)；
+				\item 特殊文件 (通常位于 \texttt{/dev})；
+				\item 文件格式和规范，如 \texttt{/etc/passwd}；
+				\item 游戏；
+				\item 杂项 (包括宏包和规范)，如 \texttt{man(7)}, \texttt{groff(7)}, \texttt{man-pages(7)} 等；
+				\item 系统管理命令 (通常只针对 root 用户)；
+				\item 内核例程 (非标准)。
+			\end{enumerate}
+
+			通过 \texttt{man <\kern0pt类别\kern0pt> <\kern0pt命令\kern0pt>} 可以具体指定在哪一类中查。大家可以体会一下 \texttt{man 1 printf} 和 \texttt{man 3 printf} 的差别\footnote{\url{https://www.cnblogs.com/kelamoyujuzhen/p/9822224.html}, \url{https://blog.csdn.net/weixin_50502862/article/details/125583685}}。
+
+			另外一个常用的选项是 \texttt{-k}，就当你不知道要对什么 \texttt{man} 时，查询所有能匹配正则表达式的手册列表。
+
+			此外，进入手册后，Shell 通常会使用一个叫做 \texttt{less} 的 Pager (说人话就是你和使用 \texttt{less} 命令一样)，这是一个和 Vim 类似的环境。此时你可以 \texttt{man less} 或直接按下 ``\texttt h'' 键 (或直接搜索) 寻求帮助，比如常见的 ``\texttt /'' 表示搜索。
+
+			有关 \texttt{man} 的更多用法详见 \texttt{man man}。
+		\color{fuchsia}\item\phantomsection\label{item:docbuiltin}\texttt{man bash}/\texttt{man builtins} (Bash) 和 \texttt{man zshbuiltins} (Z shell) 用于查询所有内部命令的文档。
+
+			\normalcolor\sout{相信大家也被 Z shell 里没有 \texttt{help} 命令而且 \texttt{man if} 跳出的东西云里雾里所困扰吧（逃}
+		\item \texttt{tldr <command>}。对于一些不常用的命令，你不打算花时间精雕细琢地学习，只想快速知道最常见的用法 (范式，模板)。这时，\texttt{tldr} 是一个非常不错的选择。\texttt{tldr} (Too long; didn't read) 提供了一些命令的非常常见的套路用法，以加快你的工作效率。
+	\end{itemize}
+
+	{\color{red}\bfseries 注：在这之后提到如果有没出现的 ``前置技能''，就表示建议使用 \texttt{man} 或 \texttt{tldr} 工具进行相关自学。\par
+	再次提醒，学会主动查手册是一项非常非常非常重要的技能，之后的命令介绍会非常简略，希望大家学会自己查 \texttt{tldr} 获取主要用法，查 \texttt{man} 获取手册！！！\par
+	再次提醒，学会主动查手册是一项非常非常非常重要的技能，之后的命令介绍会非常简略，希望大家学会自己查 \texttt{tldr} 获取主要用法，查 \texttt{man} 获取手册！！！\par
+	再次提醒，学会主动查手册是一项非常非常非常重要的技能，之后的命令介绍会非常简略，希望大家学会自己查 \texttt{tldr} 获取主要用法，查 \texttt{man} 获取手册！！！}
+
+	\subsection{SSH 相关}
+
+	\textcolor{fuchsia}{[\textit{主要命令：\texttt{ssh}, \texttt{scp}, \texttt{ssh-keygen}, \texttt{ssh-copy-id}}]}
+
+	命令的用法请使用 \texttt{man} 以及 \url{https://docs.net9.org/basic/linux/#ssh} 进行学习。值得注意的一点是，可以在家目录下配置 \texttt{.ssh/config} 文件来将记住常用的服务器配置 (VSCode 也会使用这个！) 详细的规范见 \verb!man ssh_config!。
+
+	\subsection{Shell 语法}
+
+	\textcolor{fuchsia}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
+
+	见\autoref{table:grammar}，扩展自 \cite{lbwvssl}。官方文档可参考 \url{https://zsh.sourceforge.io/Doc/Release/index.html}。
+
+	\begin{table}[htb]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+				命令 & 例子 & 介绍 & 手册 \\
+			\hline\hline
+				\texttt{\# comment} & \texttt{\# this is a comment} & 注释 & \texttt{man zshmisc} \\
+			\hline
+				\texttt{<VARIABLE>=<VALUE>} & \vbox to18pt{}\vtop to12pt{}\texttt{ANSWER=42} & \parbox{140pt}{定义一个变量，\textbf{\color{red}注意等号两边不能有空格，Shell 大小写敏感}} & \texttt{man zshparam} \\
+			\hline
+				\verb!${VARIABLE}! & \verb!echo ${ANSWER}! & 使用变量，无歧义时可省略大括号 & \texttt{man zshparam} \\
+			\hline
+				\verb!$NUM! & \vbox to18pt{}\vtop to12pt{}\verb!echo $1! & \parbox{140pt}{使用参数，如 \texttt{./script arg1 arg2 arg3} 中 \texttt{\$2} 即为 \texttt{arg2}} & \texttt{man zshparam} \\
+			\hline
+				\verb!$@! 或 \verb!$*! & \verb!echo $*! & 所有参数的数组 & \texttt{man zshparam}\footnotemark \\
+			\hline
+				\texttt{expr} & \texttt{expr 2 + 4} & 计算数学表达式 & \texttt{man expr} \\
+			\hline
+				\verb!`COMMAND`! 或 \verb!$(COMMAND)! & \verb!echo $(expr 2 + 4)! & 取命令结果 & \texttt{man zshexpn} \\
+			\hline\hline
+				\verb!{A,B,C}! & \verb!cat file{A,B,C}.txt! & 按照分配律展开 & \texttt{man zshexpn} \\
+			\hline
+				\verb!{low..high}! & \verb!touch test{1..10}.in! & 范围展开 & \texttt{man zshexpn}  \\
+			\hline
+				\verb!~! & \verb!cd ~! & 展开你的家目录 & \texttt{man zshexpn} \\
+			\hline
+				\verb!~USER! & \verb!echo ~root! & 展开某个用户的家目录 & \texttt{man zshexpn} \\
+			\hline
+				\texttt ?, \texttt *, \texttt{**}, \texttt{[...]} & \verb!rm **/A?[1-5].log! & 文件名匹配 (\href{https://en.wikipedia.org/wiki/Glob_(programming)}{Glob}) 语法 & \texttt{man zshexpn} \\
+			\hline
+		\end{tabular}
+		\caption{常用语法}
+		\label{table:grammar}
+	\end{table}
+
+	其它复杂的语法 (如 \verb!() (()) [] [[]] {} if for case select! 定义函数等) 可见 \texttt{man zshexpn}，\texttt{man zshparam}，\texttt{man zshmisc} 等。所有文档可通过 \verb!ls /usr/share/man/man1/zsh*! 或 \texttt{man zshall} 查询，当然也可查询 \url{https://zsh.sourceforge.io/Doc/Release/index.html} (其实内容是一样的说) 或网上相关教程 (不一定靠谱)。
+
+	\subsubsection{环境变量}
+
+	环境变量是一类特殊的变量，有点像局部变量，它的一大特性是\textbf{可以继承给它的子进程}，从而广泛应用于外部命令们的参数配置。
+
+	环境变量的定义有如下几种方式：
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{export <VARIABLE>=<VALUE>}：定义环境变量。
+		\item \texttt{<VARIABLE>=<VALUE> <command>}：在这一条命令中拥有该环境变量，命令结束后变量消失 (\texttt{man zshmisc})。
+		\item 使用其它程序设置。
+	\end{itemize}
+
+	环境变量可以用程序或 \texttt{unset <VARIABLE>} 清除。
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{declare} / \texttt{typeset} 可用于查看所有定义的变量。
+		\item \texttt{env} 可用于查看所有定义的环境变量，以及运行相关程序。
+	\end{itemize}
+
+	\subsubsection[调用其它脚本]{调用其它脚本\protect\cite{lbwvssl}}
+
+	在 Shell 中调用其它脚本有两种方式：\texttt{source} (简写 \texttt .) 或子 Shell (\texttt{zsh <script>} 或使用 \href{https://en.wikipedia.org/wiki/Shebang_(Unix)}{Shebang})。
+
+	主要区别是：\texttt{source} 方法在本 shell 执行，子 Shell 方法会新建子终端执行。
+
+	脚本中的局部变量定义仅属于执行它的终端
+
+	\begin{minted}[frame=single,linenos=true,rulecolor=blue,escapeinside=||]{shell}
+echo 'ANSWER=42' > script.sh
+zsh script.sh # 变量在子终端定义
+echo ${ANSWER} # 对本终端，变量不可见
+source script.sh # 变量在本终端定义，也可用 . script.sh
+echo ${ANSWER} # 变量可见
+	\end{minted}
+
+	\subsection{Shell 选项 (可选)}
+
+	\textcolor{fuchsia}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
+
+	Shell 选项有些地方有称之为 Shell 专有变量。
+
+	\subsection{一些命令}
+
+	这里还有一些\sout{可能在 Puzzle 中用得到的}命令，具体方法请自行使用 \texttt{man} 和 \texttt{tldr} (记住，他们真的是很好的老师，我已经没什么好写的了)。
+	\footnotetext{不同 Shell 对这种变量的处理方式大相径庭。Bash 的处理比 Z Shell 更加混沌邪恶。在 Z Shell 中 \texttt{\$*} = \texttt{\$argv}，以及对应的 \texttt{\$ARGC}，具体区别可见 \texttt{man zshparam}。}
+
+	\subsubsection{进程}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{ps} / \texttt{top} / \texttt{htop}：查询进程信息
+		\item \texttt{uptime}：查询系统启动时间，用户数以及平均负载 \sout{(其实就是 \texttt{top} 的第一行)}
+		\item \texttt{kill} / \texttt{killall}：杀死进程
+		\item \texttt{... \&} / \texttt{fg} / \texttt{bg} / \texttt{jobs} / \texttt{nohup}:前后台切换，\sout{避免《人类的群星闪耀时》}(查不到？看看\hyperref[item:docbuiltin]{这里}！)
+	\end{itemize}
+
+	\subsubsection{文件系统}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{cat}：输出并连接文件
+		\item \texttt{tee}：将输入复制一份 (标准输出和文件)
+		\item \texttt{split}：分裂文件 (用于制作分卷压缩包)
+		\item \texttt{dd}：拷贝文件的底层接口
+		\item \sout{\texttt{tac} / \texttt{rev}：花里胡哨地输出文件}
+		\item \texttt{stat}：显示文件信息
+		\item \texttt{wc}：统计行数等信息
+		\item \texttt{sort}：排序
+		\item \sout{\texttt{tsort}：拓扑排序}
+		\item \texttt{uniq}：去重
+		\item \texttt{grep}：搜索文件内容
+		\item \texttt{awk} / \texttt{cut} / \texttt{sed}：简单文件处理
+		\item \texttt{head} / \texttt{tail}：截取文件 (\texttt{tail -f} 比较有用，通常用于输出日志)
+		\item \texttt{du}：显示已用空间
+		\item \texttt{df}：显示可用空间
+		\item \texttt{less}：友好地展示文件内容 (允许手动滚屏)
+		\item \texttt{realpath}：显示经过解析的绝对路径 (所有符号链接均经过解析，从根目录开始)
+		\item \texttt{basename} / \texttt{dirname}：分离目录名和文件名
+	\end{itemize}
+
+	\subsubsection[网络]{网络\protect\cite{lbwvssl}}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{ifconfig} / \texttt{ip}：查询网络配置
+		\item \texttt{netstat}：查询连接情况
+		\item \texttt{ping}：检查网络是否连通
+		\item \texttt{tcpdump}：抓网络包
+		\item \texttt{nc}：手动发/听网络包
+		\item \texttt{dig} / \texttt{nslookup}：DNS 解析
+		\item \texttt{curl} / \texttt{wget}：网络下载
+	\end{itemize}
+
+	\subsubsection{其它}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{clear} 清屏
+		\item \texttt{exec} 用接下来的程序替换当前进程
+		\item \texttt{history} 查询历史记录
+		\item \texttt{tar} / \texttt{gzip} / \texttt{gunzip} / \texttt{zip} / \texttt{unzip}：各种不同格式的压缩工具
+		\item \texttt{shutdown} / \texttt{halt} / \texttt{reboot}：关机及重启
+		\item \texttt{date}：显示或更改系统时间
+		\item \texttt{uname}：查询系统相关信息 (\texttt{-a})
+		\item \texttt{lsb\_release}：(Ubuntu) 查询版本信息 (\texttt{-a})
+		\item \texttt{service} / \texttt{systemctl} 操作系统服务
+		\item \texttt w / \texttt{who}：查询登录用户
+		\item \sout{\texttt{write}：聊天 (记住 Linux 是多用户操作系统) (可以在上某些课时恶搞让别人终端突然收到消息)}
+		\item \sout{\texttt{wall}：广播消息}
+		\item \sout{\texttt{factor}：分解质因数}
+		\item \sout{\texttt{tty}：查询当前 tty}
+	\end{itemize}
 
 	\section{Git}
 
@@ -112,6 +383,7 @@ curl -d 'id=<你的学号>' -d 'flag=sast2023{*******}' http://59.66.131.240:500
 curl -d 'flag=sast2023{*******}' http://59.66.131.240:50000/submit
 	\end{minted}
 
+	\vspace{-6pt}
 	输入该命令后，你的终端会返回你的提交是否有效。简单起见，如果返回以 \texttt{"Success":} 开头说明提交成功，否则会给出对应的错误信息。
 
 	此外，你可以在浏览器直接访问 \url{http://59.66.131.240:50000/} 查看当前 ``flag'' 的获取情况以及排行榜。排行榜默认按照总分降序排列，同分按最后一次提交时间升序排列。你也可以点击表头更改排序方式。
@@ -128,8 +400,8 @@ curl -d 'flag=sast2023{*******}' http://59.66.131.240:50000/submit
 		\item ``mails'' 文件夹用于获得服务器的管理员权限以进行进一步操作，该文件夹与 ``flag'' 无关，且解锁所有三个区的 ``flag'' 都无需用到该权限 (即使用 ``train'' 账号即可完成)。
 		\item 如果你没有分配到服务器，你可以去 Docker Hub 中的 \url{https://hub.docker.com/r/jkjkmxmx/sast2023-linux-git} 下载原生的镜像来游玩，该镜像是 x86-64/amd64 架构的，最好保证你的计算机也是此架构 \sout{(好像用 arm64 的 QEMU 模拟会出现某些 flag 拿不到的问题)}。具体流程如下：
 		\begin{minted}[frame=single,linenos=true,rulecolor=blue,breaklines=true]{shell}
-docker pull jkjkmxmx/sast2023-linux-git:v1
-docker run --privileged -d -p 10000:22 -p 10001:80 -p 10002:3306 -p 10003:10001 -p 10004:10002 -h sast2023 --name sast2023 jkjkmxmx/sast2023-linux-git:v1
+docker pull jkjkmxmx/sast2023-linux-git:v2
+docker run --privileged -d -p 10000:22 -p 10001:80 -p 10002:3306 -p 10003:10001 -p 10004:10002 -h sast2023 --name sast2023 jkjkmxmx/sast2023-linux-git:v2
 ssh -p 10000 train@localhost
 		\end{minted}
 	\end{itemize}
@@ -185,7 +457,7 @@ ssh -p 10000 train@localhost
 	\begin{itemize}
 		\itemsep0pt
 		\item 该谜题在 ``debug'' 分支下进行。
-		\item ``cat'' 对 \texttt{debug.cpp} 文件修改了很多次，但这些文件产生运行时错误了！``cat'' 想知道，究竟是哪一次提交，使这个程序第一次产生运行时错误呢\footnote{保证存在这样的提交，使得在其之前 \texttt{debug.cpp} 正常运行，它及其它之后均产生运行时错误}？
+		\item ``cat'' 对 \texttt{debug.cpp} 文件修改了很多次，但这些文件产生运行时错误了！``cat'' 想知道，究竟是哪一次提交，使这个程序第一次产生运行时错误呢\footnote{保证存在这样的提交，使得在其之前 \texttt{debug.cpp} 正常运行，它及其它之后均产生运行时错误。}？
 		\item \textcolor{gray}{[\textit{该怎么寻找这样的提交呢？二分查找？如何在版本树中进行二分查找？}]}
 		\item \textbf{\textcolor{properpurple}{只有这个提交正文里的 ``flag'' 才是真正的 ``flag'' 哦！}}
 	\end{itemize}
