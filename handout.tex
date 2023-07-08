@@ -137,7 +137,7 @@
 				\item 内核例程 (非标准)。
 			\end{enumerate}
 
-			通过 \texttt{man <\kern0pt类别\kern0pt> <\kern0pt命令\kern0pt>} 可以具体指定在哪一类中查。大家可以体会一下 \texttt{man 1 printf} 和 \texttt{man 3 printf} 的差别\footnote{\url{https://www.cnblogs.com/kelamoyujuzhen/p/9822224.html}, \url{https://blog.csdn.net/weixin_50502862/article/details/125583685}}。
+			\compress{-17.5pt}{通过 \texttt{man <\kern0pt类别\kern0pt> <\kern0pt命令\kern0pt>} 可以具体指定在哪一类中查。大家可以体会一下 \texttt{man 1 printf} 和 \texttt{man 3 printf} 的差别\footnote{\url{https://www.cnblogs.com/kelamoyujuzhen/p/9822224.html}, \url{https://blog.csdn.net/weixin_50502862/article/details/125583685}}。}
 
 			另外一个常用的选项是 \texttt{-k}，就当你不知道要对什么 \texttt{man} 时，查询所有能匹配正则表达式的手册列表。
 
@@ -167,7 +167,7 @@
 
 	见\autoref{table:grammar}，扩展自 \cite{lbwvssl}。官方文档可参考 \url{https://zsh.sourceforge.io/Doc/Release/index.html}。
 
-	\begin{table}[htb]
+	\begin{table}[H]
 		\centering
 		\begin{tabular}{|c|c|c|c|}
 			\hline
@@ -175,7 +175,7 @@
 			\hline\hline
 				\texttt{\# comment} & \texttt{\# this is a comment} & 注释 & \texttt{man zshmisc} \\
 			\hline
-				\texttt{<VARIABLE>=<VALUE>} & \vbox to18pt{}\vtop to12pt{}\texttt{ANSWER=42} & \parbox{140pt}{定义一个变量，\textbf{\color{red}注意等号两边不能有空格，Shell 大小写敏感}} & \texttt{man zshparam} \\
+				\texttt{<VARIABLE>=<VALUE>} & \vbox to18pt{}\vtop to12pt{}\texttt{ANSWER=42} & \parbox{140pt}{定义一个变量，\textbf{\color{red}注意等号两边不能有空格，且Shell 大小写敏感}} & \texttt{man zshparam} \\
 			\hline
 				\verb!${VARIABLE}! & \verb!echo ${ANSWER}! & 使用变量，无歧义时可省略大括号 & \texttt{man zshparam} \\
 			\hline
@@ -195,14 +195,16 @@
 			\hline
 				\verb!~USER! & \verb!echo ~root! & 展开某个用户的家目录 & \texttt{man zshexpn} \\
 			\hline
-				\texttt ?, \texttt *, \texttt{**}, \texttt{[...]} & \verb!rm **/A?[1-5].log! & 文件名匹配 (\href{https://en.wikipedia.org/wiki/Glob_(programming)}{Glob}) 语法 & \texttt{man zshexpn} \\
+				\texttt ?, \texttt *, \texttt{**}, \texttt{[...]} & \vbox to18pt{}\vtop to12pt{}\verb!rm **/A?[1-5].log! & \parbox{144pt}{文件名匹配 (\href{https://en.wikipedia.org/wiki/Glob_(programming)}{Glob}) 语法，\textbf{\color{red}使用引号可以避免自动展开} (\texttt{zshmisc})} & \texttt{man zshexpn} \\
 			\hline
 		\end{tabular}
 		\caption{常用语法}
 		\label{table:grammar}
 	\end{table}
 
-	其它复杂的语法 (如 \verb!() (()) [] [[]] {} if for case select! 定义函数等) 可见 \texttt{man zshexpn}，\texttt{man zshparam}，\texttt{man zshmisc} 等。所有文档可通过 \verb!ls /usr/share/man/man1/zsh*! 或 \texttt{man zshall} 查询，当然也可查询 \url{https://zsh.sourceforge.io/Doc/Release/index.html} (其实内容是一样的说) 或网上相关教程 (不一定靠谱)。
+	\footnotetext{不同 Shell 对这种变量的处理方式大相径庭。Bash 的处理比 Z Shell 更加混沌邪恶。在 Z Shell 中 \texttt{\$*} = \texttt{\$argv}，以及对应的 \texttt{\$ARGC}，具体区别可见 \texttt{man zshparam}。}其它复杂的语法 (如 \verb!() (()) [] [[]] {} if for case select! 数组、算术运算 定义函数等) 可见 \texttt{man zshexpn}，\texttt{man zshparam}，\texttt{man zshmisc} 等。\footnote{注：如果你真的想在 Shell 里使用复杂的语法，建议使用 Python 等方便的语言。}
+
+	所有文档可通过 \verb!ls /usr/share/man/man1/zsh*! 或 \texttt{man zshall} 查询，当然也可查询 \url{https://zsh.sourceforge.io/Doc/Release/index.html} (其实内容是一样的说) 或网上相关教程 (不一定靠谱)。
 
 	\subsubsection{环境变量}
 
@@ -226,11 +228,11 @@
 
 	\subsubsection[调用其它脚本]{调用其它脚本\protect\cite{lbwvssl}}
 
-	在 Shell 中调用其它脚本有两种方式：\texttt{source} (简写 \texttt .) 或子 Shell (\texttt{zsh <script>} 或使用 \href{https://en.wikipedia.org/wiki/Shebang_(Unix)}{Shebang})。
+	在 Shell 中调用其它脚本有两种方式：\texttt{source} (简写 \texttt .) 或子 Shell (\texttt{zsh <script>} 或使用 \href{https://en.wikipedia.org/wiki/Shebang_(Unix)}{Shebang})，\textcolor{gray}{当然还有一种方法是通过 \texttt{exec} 直接替换当前进程，由于这个区别比较大就不讨论了}。
 
 	主要区别是：\texttt{source} 方法在本 shell 执行，子 Shell 方法会新建子终端执行。
 
-	脚本中的局部变量定义仅属于执行它的终端
+	脚本中的局部变量定义仅属于执行它的终端。
 
 	\begin{minted}[frame=single,linenos=true,rulecolor=blue,escapeinside=||]{shell}
 echo 'ANSWER=42' > script.sh
@@ -244,12 +246,49 @@ echo ${ANSWER} # 变量可见
 
 	\textcolor{fuchsia}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
 
-	Shell 选项有些地方有称之为 Shell 专有变量。
+	Shell 选项，有些地方有称之为 Shell 专有变量。
+
+	对 Z Shell 而言，手册可在 \texttt{man zshoptions} 中查看，使用 \texttt{setopt} 和 \texttt{unsetopt} 设置。
+
+	\autoref{table:setopt} 列出了一些常用的 Z Shell 选项。
+
+	\begin{table}[htb]
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline
+				选项 & 启用 (\texttt{setopt}) 效果 & 禁用 (\texttt{unsetopt}) 效果 \\
+			\hline\hline
+				\texttt{autocd} & \parbox{140pt}{对于无法解析的命令，看成前面有 \texttt{cd}。如 \texttt{..} 默认成为 \texttt{cd ..}} & 无前述效果 \\
+			\hline
+				\texttt{interactivecomments} & 在交互式终端中允许使用 \texttt{\#} 注释 & 交互式终端不能注释，脚本中仍可注释 \\
+			\hline
+				\texttt{glob} & 启用 Glob (\texttt{man zshexpn}) & 禁用 Glob \\
+			\hline
+				\texttt{nomatch} & 对于无法匹配的 Glob 报错 & \parbox{162pt}{对于无法匹配的 Glob，直接原样返回 (建议开启这个，因为有些命令需要原样的 \texttt* 等字符，避免频繁打引号)} \\
+			\hline
+				\texttt{globdots} & Glob 中 \texttt* 匹配隐藏文件 & Glob 中 \texttt* 不匹配隐藏文件 \\
+			\hline
+				\texttt{globstarshort} & 使用 \texttt{**} 代替 \texttt{**/*} 递归列举文件\footnotemark & 单纯的 \texttt{**} 等价于 \texttt* \\
+			\hline
+				\texttt{nullglob} & 对于无法匹配的 Glob，返回空串而不报错会原样返回 & 遵循 \texttt{nomatch} \\
+			\hline
+				\texttt{extendedglob} & 允许使用更高级的语法 (具体参见 \texttt{man zshexpn}) & 禁用高级语法 \\
+			\hline
+		\end{tabular}
+		\caption{常用的 Z Shell 选项}
+		\label{table:setopt}
+	\end{table}
+
+	\footnotetext{递归列举的功能在 Bash 中需要通过打开 \texttt{globstar} 选项来实现。}
+	\begin{itemize}
+		\itemsep0pt
+		\item 使用不带参数 \texttt{setopt} / \texttt{unsetopt} / \texttt{set -o} / \texttt{set +o} 可以查看所有 Shell 选项。
+		\item 使用 \texttt{[[ -o <option> ]]} 可以检查某个 Shell 选项是否设置 (\texttt{man zshmisc})。
+	\end{itemize}
 
 	\subsection{一些命令}
 
 	这里还有一些\sout{可能在 Puzzle 中用得到的}命令，具体方法请自行使用 \texttt{man} 和 \texttt{tldr} (记住，他们真的是很好的老师，我已经没什么好写的了)。
-	\footnotetext{不同 Shell 对这种变量的处理方式大相径庭。Bash 的处理比 Z Shell 更加混沌邪恶。在 Z Shell 中 \texttt{\$*} = \texttt{\$argv}，以及对应的 \texttt{\$ARGC}，具体区别可见 \texttt{man zshparam}。}
 
 	\subsubsection{进程}
 
@@ -257,8 +296,9 @@ echo ${ANSWER} # 变量可见
 		\itemsep0pt
 		\item \texttt{ps} / \texttt{top} / \texttt{htop}：查询进程信息
 		\item \texttt{uptime}：查询系统启动时间，用户数以及平均负载 \sout{(其实就是 \texttt{top} 的第一行)}
+		\item \texttt{exec}：用接下来的程序替换当前进程
 		\item \texttt{kill} / \texttt{killall}：杀死进程
-		\item \texttt{... \&} / \texttt{fg} / \texttt{bg} / \texttt{jobs} / \texttt{nohup}:前后台切换，\sout{避免《人类的群星闪耀时》}(查不到？看看\hyperref[item:docbuiltin]{这里}！)
+		\item \texttt{... \&} / \texttt{fg} / \texttt{bg} / \texttt{jobs} / \texttt{nohup}：前后台切换，\sout{避免《人类的群星闪耀时》}(查不到？看看\hyperref[item:docbuiltin]{这里}！)
 	\end{itemize}
 
 	\subsubsection{文件系统}
@@ -303,7 +343,6 @@ echo ${ANSWER} # 变量可见
 	\begin{itemize}
 		\itemsep0pt
 		\item \texttt{clear} 清屏
-		\item \texttt{exec} 用接下来的程序替换当前进程
 		\item \texttt{history} 查询历史记录
 		\item \texttt{tar} / \texttt{gzip} / \texttt{gunzip} / \texttt{zip} / \texttt{unzip}：各种不同格式的压缩工具
 		\item \texttt{shutdown} / \texttt{halt} / \texttt{reboot}：关机及重启
@@ -320,7 +359,7 @@ echo ${ANSWER} # 变量可见
 
 	\section{Git}
 
-	\section{实战}
+	\section[实战]{$\overset{\text{zu\`o\vphantom y}}{\text{实}}\overset{\text{y\`e}}{\text{战}}$}
 
 	\subsection{服务器连接}
 	\label{sss:connserver}
@@ -398,7 +437,7 @@ curl -d 'flag=sast2023{*******}' http://59.66.131.240:50000/submit
 		\item 提交 ``flag'' 的服务器和分配给你的服务器是同一个服务器，所以不要尝试做出伤敌一千自损八百的事情。
 		\item 由于\raisebox{-3pt}{\includegraphics{assets/pigeon.pdf}\includegraphics{assets/pigeon.pdf}\includegraphics{assets/pigeon.pdf}}的原因没做复杂的身份验证，所以请只用自己的学号提交 \sout{(真有人喜欢给别人送分吗？)}。
 		\item ``mails'' 文件夹用于获得服务器的管理员权限以进行进一步操作，该文件夹与 ``flag'' 无关，且解锁所有三个区的 ``flag'' 都无需用到该权限 (即使用 ``train'' 账号即可完成)。
-		\item 如果你没有分配到服务器，你可以去 Docker Hub 中的 \url{https://hub.docker.com/r/jkjkmxmx/sast2023-linux-git} 下载原生的镜像来游玩，该镜像是 x86-64/amd64 架构的，最好保证你的计算机也是此架构 \sout{(好像用 arm64 的 QEMU 模拟会出现某些 flag 拿不到的问题)}。具体流程如下：
+		\item 如果你没有分配到服务器，你可以去 Docker Hub 中 \url{https://hub.docker.com/r/jkjkmxmx/sast2023-linux-git} 下载原生的镜像来游玩，该镜像是 x86-64/amd64 架构的，最好保证你的计算机也是此架构 \sout{(好像用 arm64 的 QEMU 模拟会出现某些 flag 拿不到的问题)}。具体流程如下：
 		\begin{minted}[frame=single,linenos=true,rulecolor=blue,breaklines=true]{shell}
 docker pull jkjkmxmx/sast2023-linux-git:v2
 docker run --privileged -d -p 10000:22 -p 10001:80 -p 10002:3306 -p 10003:10001 -p 10004:10002 -h sast2023 --name sast2023 jkjkmxmx/sast2023-linux-git:v2
