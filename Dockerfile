@@ -8,7 +8,7 @@ COPY files/sources.list /etc/apt/sources.list
 COPY files/install.sh /root/install.sh
 
 RUN apt update\
-    && apt install -y apt-utils openssh-server sudo zsh htop vim nano inetutils-ping python3 gcc g++ curl wget tmux unzip git mysql-server mysql-client nginx man language-pack-zh-hans file tldr \
+    && apt install -y apt-utils openssh-server sudo zsh htop vim nano inetutils-ping python3 gcc g++ curl wget tmux unzip git mysql-server mysql-client nginx man language-pack-zh-hans file tldr rename \
     && echo "y\ny" | unminimize\
     && mkdir /run/sshd\
     && /root/install.sh

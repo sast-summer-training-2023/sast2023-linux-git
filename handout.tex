@@ -62,7 +62,7 @@
 
 	有条件的同学可以给电脑装一个 Linux 系统 (或双系统)，\sout{这样你就能在各种配置中度过一段漫长而有趣的时光了}。
 
-	对于其他同学，Windows 的话推荐使用 \href{https://learn.microsoft.com/zh-cn/windows/wsl/install}{WSL\,2} (毕竟是 Type-1 的虚拟机，有性能支持)，\sout{如果只想要一个终端的话}\linebreak[1]\sout{可以用 Git Bash}；对 Mac\,OS 的话原生的终端就有比较接近的体验 (推荐使用 \href{https://iterm2.com/}{iTerm\,2})，或者使用 Docker。当然有服务器的同学可以直接用各种服务器 (现代的服务器基本都是 Linux)。
+	对于其他同学，Windows 的话推荐使用 \href{https://learn.microsoft.com/zh-cn/windows/wsl/install}{WSL\,2} (毕竟是 Type-1 的虚拟机，有性能支持)，\sout{如果只想要一个终端的话}\linebreak[1]\sout{可以用 Git Bash}；对 macOS 的话原生的终端就有比较接近的体验 (推荐使用 \href{https://iterm2.com/}{iTerm\,2})，或者使用 Docker。当然有服务器的同学可以直接用各种服务器 (现代的服务器基本都是 Linux)。
 
 	\subsection{课前准备}
 
@@ -101,7 +101,7 @@
 
 	Shell 并不是一种固定的语言，而是衍生是许多的方言 (扩展)，如 \texttt{sh} (原生), \texttt{bash}, \texttt{zsh}, \textcolor{gray}{\texttt{dash}, \sout{\texttt{fish}, \texttt{csh}, \texttt{ksh}}} 等。
 
-	比较常见的是 Bash (Ubuntu 默认) 和 Z shell (zsh, Mac\,OS 默认)。当然这些 shell 自身也会有相对应的扩展，比如服务器上默认安装的 Z shell 扩展 \href{https://ohmyz.sh/}{``Oh My Zsh''}。
+	比较常见的是 Bash (Ubuntu 默认) 和 Z shell (zsh, macOS 默认)。当然这些 shell 自身也会有相对应的扩展，比如服务器上默认安装的 Z shell 扩展 \href{https://ohmyz.sh/}{``Oh My Zsh''}。
 
 	通过 \texttt{type} 命令\footnote{有些教程用建议使用 \texttt{which} 命令，但是在有一些 Shell (Sh 和 Bash) 中 \texttt{which} 是\Emm{外部命令}，因此无法查阅如 \texttt{if} 等\Emm{内部命令}。而 \texttt{type} 在常见的 Sh, Bash, Z shell 中均为内部命令，可以查询到所有命令的信息。}可见\textcolor{red}{形如 \texttt{cd}, \texttt{if}, \texttt{pwd}, \texttt{alias}, \texttt{setopt}/\texttt{shopt} 等命令返回了 ``shell 内建''/``shell 关键字''，它们统称\Emm{内部命令}；而形如 \texttt{ls}, \texttt{wc}, \texttt{ps}, \texttt{cp}, \texttt{find}, \texttt{mkdir}, \texttt{sudo} 等命令会返回一个对应文件所在的路径，它们统称\Emm{外部命令}}\footnote{实际上还有别名，函数等形式，可以使用 \texttt{type -w} (Bash 中为 \texttt{type -t}) 来查看类别。}。% type -w ls cd wc tc if none
 
@@ -167,7 +167,7 @@
 	\subsection{Shell 语法}
 	\label{sss:shell-syntax}
 
-	\textcolor{properpurple}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
+	\textcolor{properpurple}{[\textit{方便起见，本节内容偏向 Z shell。}]}
 
 	见\autoref{table:grammar}，扩展自 \cite{lbwvssl}。官方文档可参考 \url{https://zsh.sourceforge.io/Doc/Release/index.html}。
 
@@ -206,7 +206,7 @@
 		\label{table:grammar}
 	\end{table}
 
-	\footnotetext{不同 Shell 对这种变量的处理方式大相径庭。Bash 的处理比 Z Shell 更加混沌邪恶。在 Z Shell 中 \texttt{\$*} = \texttt{\$argv}，以及对应的 \texttt{\$ARGC}，具体区别可见 \texttt{man zshparam}。}其它复杂的语法 (如 \verb!() (()) [] [[]] {} if for case select! 数组、算术运算 定义函数等) 可见 \texttt{man zshexpn}，\texttt{man zshparam}，\texttt{man zshmisc} 等。\footnote{注：如果你真的想在 Shell 里使用复杂的语法，建议使用 Python 等方便的语言。}
+	\footnotetext{不同 Shell 对这种变量的处理方式大相径庭。Bash 的处理比 Z shell 更加混沌邪恶。在 Z shell 中 \texttt{\$*} = \texttt{\$argv}，以及对应的 \texttt{\$ARGC}，具体区别可见 \texttt{man zshparam}。}其它复杂的语法 (如 \verb!() (()) [] [[]] {} if for case select! 数组、算术运算 定义函数等) 可见 \texttt{man zshexpn}，\texttt{man zshparam}，\texttt{man zshmisc} 等。\footnote{注：如果你真的想在 Shell 里使用复杂的语法，建议使用 Python 等方便的语言。}
 
 	所有文档可通过 \verb!ls /usr/share/man/man1/zsh*! 或 \texttt{man zshall} 查询，当然也可查询 \url{https://zsh.sourceforge.io/Doc/Release/index.html} (其实内容是一样的说) 或网上相关教程 (不一定靠谱)。
 
@@ -246,15 +246,15 @@ source script.sh # 变量在本终端定义，也可用 . script.sh
 echo ${ANSWER} # 变量可见
 	\end{minted}
 
-	\subsection[Shell 选项]{\danger\ Shell 选项}
+	\subsection[Shell 选项]{\danger\footnote{\danger\vtop to14pt{} 为致敬 Knuth 著的 \TeX book 的符号，表示可以选读的进阶内容。}\ Shell 选项}
 
-	\textcolor{properpurple}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
+	\textcolor{properpurple}{[\textit{方便起见，本节内容偏向 Z shell。}]}
 
 	Shell 选项，有些地方有称之为 Shell 专有变量。
 
-	对 Z Shell 而言，手册可在 \texttt{man zshoptions} 中查看，使用 \texttt{setopt} 和 \texttt{unsetopt} 设置。
+	对 Z shell 而言，手册可在 \texttt{man zshoptions} 中查看，使用 \texttt{setopt} 和 \texttt{unsetopt} 设置。
 
-	\autoref{table:setopt} 列出了一些常用的 Z Shell 选项。
+	\autoref{table:setopt} 列出了一些常用的 Z shell 选项。
 
 	\begin{table}[htb]
 		\centering
@@ -279,7 +279,7 @@ echo ${ANSWER} # 变量可见
 				\texttt{extendedglob} & 允许使用更高级的语法 (具体参见 \texttt{man zshexpn}) & 禁用高级语法 \\
 			\hline
 		\end{tabular}
-		\caption{常用的 Z Shell 选项}
+		\caption{常用的 Z shell 选项}
 		\label{table:setopt}
 	\end{table}
 
@@ -302,7 +302,7 @@ echo ${ANSWER} # 变量可见
 		\item \texttt{uptime}：查询系统启动时间，用户数以及平均负载 \sout{(其实就是 \texttt{top} 的第一行)}
 		\item \texttt{exec}：用接下来的程序替换当前进程
 		\item \texttt{kill} / \texttt{killall}：杀死进程
-		\item \texttt{... \&} / \texttt{fg} / \texttt{bg} / \texttt{jobs} / \texttt{nohup}：前后台切换，\sout{避免《人类的群星闪耀时》}(查不到？看看\hyperref[item:docbuiltin]{这里}！)
+		\item \texttt{... \&} / \texttt{fg} / \texttt{bg} / \texttt{jobs} / \texttt{nohup}：前后台切换，\sout{避免《人类的群星闪耀时》}(查不到怎么用？看看\hyperref[item:docbuiltin]{这里}！)
 	\end{itemize}
 
 	\subsubsection{文件系统}
@@ -348,6 +348,7 @@ echo ${ANSWER} # 变量可见
 		\itemsep0pt
 		\item \texttt{clear} 清屏
 		\item \texttt{history} 查询历史记录
+		\item \texttt{ulimit} 修改 Shell 的资源限制
 		\item \texttt{alias} / \texttt{unalias} 定义与取消定义别名
 		\item \texttt{tar} / \texttt{gzip} / \texttt{gunzip} / \texttt{zip} / \texttt{unzip}：各种不同格式的压缩工具
 		\item \texttt{shutdown} / \texttt{halt} / \texttt{reboot}：关机及重启
@@ -396,7 +397,7 @@ echo ${ANSWER} # 变量可见
 	\noindent\hrulefill
 
 	Git 作为世界上最流行的 DVCS，占了开源市场版本控制系统约 $74 \%$ 的份额\footnote{\url{https://openhub.net/repositories/compare}, 2023.7.}，其余比较常见的有 svn (CVCS, $22 \%$, 代表者 texlive 等)，Mercurial (DVCS, $1 \%$, 代表者 nginx 等)。
-	而且，很多 DVCS 或多或少受到 Git 的影响 (如 Mercurial/hg 等)，因此学习 Git 也会对之后学其他 DVCS 带来遍历，这也是我们学 Git 的理由之一。
+	而且，很多 DVCS 或多或少受到 Git 的影响 (如 Mercurial/hg 等)，因此学习 Git 也会对之后学其他 DVCS 带来便利，这也是我们学 Git 的理由之一。
 
 	\subsubsection[什么是 Git]{什么是 Git\protect\cite{net9-git}}
 
@@ -427,7 +428,7 @@ echo ${ANSWER} # 变量可见
 
 	Linux (一般自带，以 Ubuntu 为例)：\texttt{sudo apt install git}
 
-	Mac\,OS (一般自带)：\texttt{brew install git} 或 \url{https://sourceforge.net/projects/git-osx-installer/} \cite{sast2021-git}。
+	macOS (一般自带)：\texttt{brew install git} 或 \url{https://sourceforge.net/projects/git-osx-installer/} \cite{sast2021-git}。
 
 	\subsection{学习资料}
 
@@ -586,7 +587,7 @@ echo ${ANSWER} # 变量可见
 
 	\textcolor{properpurple}{[\textit{直冲官方版：\url{https://git-scm.com/docs/gitignore} 或 \texttt{git help ignore}}]}
 
-	在平时的工作中，经常会出现一些垃圾文件，如 C++ 的 \texttt{.o}, \texttt{.exe}，LaTeX 的 \texttt{.log}, \texttt{.out}，Node.js 的 \texttt{node\_modules}，\sout{以及 Mac\,OS 的万恶之源\ \texttt{.DS\_Store}}。我们不希望这些 (可能很庞大) 的文件被 Git 跟踪 (或一不小心被加入暂存区甚至版本库)，我们需要通过 Git 提供的 ignore-list 规则来告诉 Git 不需要管理的文件。
+	在平时的工作中，经常会出现一些垃圾文件，如 C++ 的 \texttt{.o}, \texttt{.exe}，LaTeX 的 \texttt{.log}, \texttt{.out}，Node.js 的 \texttt{node\_modules}，\sout{以及 macOS 的万恶之源\ \texttt{.DS\_Store}}。我们不希望这些 (可能很庞大) 的文件被 Git 跟踪 (或一不小心被加入暂存区甚至版本库)，我们需要通过 Git 提供的 ignore-list 规则来告诉 Git 不需要管理的文件。
 
 	简单地来说，你只需要在仓库的任意位置创建一个名为 \texttt{.gitignore} 的文件，然后一行写一个规则，使得满足这个规则的文件不被考虑。这样，你就可以放心使用 \texttt{git add .} 而不用担心加入奇奇怪怪的文件了。\cite{sast2021-git-2}
 
@@ -631,7 +632,7 @@ folder/*
 		\itemsep0pt
 		\item Git LFS：用于管理大文件，如模型、数据等。\url{https://git-lfs.com/}
 		\item 提交签名：给你的 Git 提交签名，这样你的提交就会旁边就会有 \textcolor{green!80!black}{Verified} 字样，防止别人伪造。\url{https://docs.github.com/zh/authentication/managing-commit-signature-verification}
-		\item Github Action：CI/CD 的好帮手，减轻人类的负担。
+		\item GitHub Actions：CI/CD 的好帮手，减轻人类的负担。
 	\end{itemize}
 
 	\section[实战]{$\overset{\text{zu\`o\vphantom y}}{\text{实}}\overset{\text{y\`e}}{\text{战}}$}
@@ -714,8 +715,8 @@ curl -d 'flag=sast2023{*******}' http://59.66.131.240:50000/submit
 		\item ``mails'' 文件夹用于获得服务器的管理员权限以进行进一步操作，该文件夹与 ``flag'' 无关，且解锁所有三个区的 ``flag'' 都无需用到该权限 (即使用 ``train'' 账号即可完成)。
 		\item 如果你没有分配到服务器，你可以去 Docker Hub 中 \url{https://hub.docker.com/r/jkjkmxmx/sast2023-linux-git} 下载原生的镜像来游玩，该镜像是 x86-64/amd64 架构的，最好保证你的计算机也是此架构 \sout{(好像用 arm64 的 QEMU 模拟会出现某些 flag 拿不到的问题)}。具体流程如下：
 		\begin{minted}[frame=single,linenos=true,rulecolor=blue,breaklines=true]{shell}
-docker pull jkjkmxmx/sast2023-linux-git:v2
-docker run --privileged -d -p 10000:22 -p 10001:80 -p 10002:3306 -p 10003:10001 -p 10004:10002 -h sast2023 --name sast2023 jkjkmxmx/sast2023-linux-git:v2
+docker pull jkjkmxmx/sast2023-linux-git:v3
+docker run --privileged -d -p 10000:22 -p 10001:80 -p 10002:3306 -p 10003:10001 -p 10004:10002 -h sast2023 --name sast2023 jkjkmxmx/sast2023-linux-git:v3
 ssh -p 10000 train@localhost
 		\end{minted}
 	\end{itemize}
