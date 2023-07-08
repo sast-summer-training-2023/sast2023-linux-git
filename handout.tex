@@ -6,7 +6,9 @@
 \lhead{\nouppercase{\lastleftmark}}
 \rhead{\nouppercase{\lastrightmark}}
 
+\font\manual=manfnt
 \def\refname{References}
+\def\danger{{\manual\char127}}
 
 \title{SAST\,2023 Summer Training\\CTF | A Warmup for Linux \& Git}
 \author{jkjkmxmx @ yhx-12243}
@@ -20,7 +22,7 @@
 
 	\subsection{Introduction}
 
-	\subsubsection{什么是 Linux}
+	\subsubsection[什么是 Linux]{什么是 Linux\protect\cite{net9-linux}}
 
 	Linux 是一种自由和开放源码的类 UNIX 操作系统，其内核由 Linus Torvalds 在 1991 年发布。
 
@@ -31,7 +33,7 @@
 		\itemsep0pt
 		\item 服务器、主机、超级计算机；
 		\item 嵌入式系统（机顶盒、移动设备等）；
-		\item 基础设施（红绿灯、工业传感器）。\cite{net9-linux}
+		\item 基础设施（红绿灯、工业传感器）。
 	\end{itemize}
 
 	\subsubsection{发行版}
@@ -104,6 +106,7 @@
 	通过 \texttt{type} 命令\footnote{有些教程用建议使用 \texttt{which} 命令，但是在有一些 Shell (Sh 和 Bash) 中 \texttt{which} 是\Emm{外部命令}，因此无法查阅如 \texttt{if} 等\Emm{内部命令}。而 \texttt{type} 在常见的 Sh, Bash, Z shell 中均为内部命令，可以查询到所有命令的信息。}可见\textcolor{red}{形如 \texttt{cd}, \texttt{if}, \texttt{pwd}, \texttt{alias}, \texttt{setopt}/\texttt{shopt} 等命令返回了 ``shell 内建''/``shell 关键字''，它们统称\Emm{内部命令}；而形如 \texttt{ls}, \texttt{wc}, \texttt{ps}, \texttt{cp}, \texttt{find}, \texttt{mkdir}, \texttt{sudo} 等命令会返回一个对应文件所在的路径，它们统称\Emm{外部命令}}\footnote{实际上还有别名，函数等形式，可以使用 \texttt{type -w} (Bash 中为 \texttt{type -t}) 来查看类别。}。% type -w ls cd wc tc if none
 
 	\begin{itemize}
+		\itemsep0pt
 		\item \Emm{内部命令}是嵌入在各个 Shell 中的 (写在对应的源码里)，\sout{就像你们写 Shell 大作业时的一堆 if/else 里讨论的命令}，\textcolor{green!80!black}{不创建新进程，执行速度较快}，缺点是\textcolor{red}{不同的 Shell 的实现可能会不一样，就是说方言可能会比较多}。
 		\item \Emm{外部命令}是 Linux 系统中独立存在的外部程序，\textcolor{green!80!black}{由于是外部程序，因此在所有 Shell 看来表现几乎一样}，\textcolor{red}{调用时会创建新的子进程}。
 
@@ -157,13 +160,14 @@
 
 	\subsection{SSH 相关}
 
-	\textcolor{fuchsia}{[\textit{主要命令：\texttt{ssh}, \texttt{scp}, \texttt{ssh-keygen}, \texttt{ssh-copy-id}}]}
+	\textcolor{properpurple}{[\textit{主要命令：\texttt{ssh}, \texttt{scp}, \texttt{ssh-keygen}, \texttt{ssh-copy-id}}]}
 
 	命令的用法请使用 \texttt{man} 以及 \url{https://docs.net9.org/basic/linux/#ssh} 进行学习。值得注意的一点是，可以在家目录下配置 \texttt{.ssh/config} 文件来将记住常用的服务器配置 (VSCode 也会使用这个！) 详细的规范见 \verb!man ssh_config!。
 
 	\subsection{Shell 语法}
+	\label{sss:shell-syntax}
 
-	\textcolor{fuchsia}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
+	\textcolor{properpurple}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
 
 	见\autoref{table:grammar}，扩展自 \cite{lbwvssl}。官方文档可参考 \url{https://zsh.sourceforge.io/Doc/Release/index.html}。
 
@@ -175,7 +179,7 @@
 			\hline\hline
 				\texttt{\# comment} & \texttt{\# this is a comment} & 注释 & \texttt{man zshmisc} \\
 			\hline
-				\texttt{<VARIABLE>=<VALUE>} & \vbox to18pt{}\vtop to12pt{}\texttt{ANSWER=42} & \parbox{140pt}{定义一个变量，\textbf{\color{red}注意等号两边不能有空格，且Shell 大小写敏感}} & \texttt{man zshparam} \\
+				\texttt{<VARIABLE>=<VALUE>} & \vbox to16pt{}\vtop to12pt{}\texttt{ANSWER=42} & \parbox{140pt}{定义一个变量，\textbf{\color{red}注意等号两边不能有空格，且Shell 大小写敏感}} & \texttt{man zshparam} \\
 			\hline
 				\verb!${VARIABLE}! & \verb!echo ${ANSWER}! & 使用变量，无歧义时可省略大括号 & \texttt{man zshparam} \\
 			\hline
@@ -242,9 +246,9 @@ source script.sh # 变量在本终端定义，也可用 . script.sh
 echo ${ANSWER} # 变量可见
 	\end{minted}
 
-	\subsection{Shell 选项 (可选)}
+	\subsection[Shell 选项]{\danger\ Shell 选项}
 
-	\textcolor{fuchsia}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
+	\textcolor{properpurple}{[\textit{方便起见，本节内容偏向 Z Shell。}]}
 
 	Shell 选项，有些地方有称之为 Shell 专有变量。
 
@@ -258,13 +262,13 @@ echo ${ANSWER} # 变量可见
 			\hline
 				选项 & 启用 (\texttt{setopt}) 效果 & 禁用 (\texttt{unsetopt}) 效果 \\
 			\hline\hline
-				\texttt{autocd} & \parbox{140pt}{对于无法解析的命令，看成前面有 \texttt{cd}。如 \texttt{..} 默认成为 \texttt{cd ..}} & 无前述效果 \\
+				\vbox to16pt{}\vtop to12pt{}\texttt{autocd} & \parbox{140pt}{对于无法解析的命令，看成前面有 \texttt{cd}。如 \texttt{..} 默认成为 \texttt{cd ..}} & 无前述效果 \\
 			\hline
 				\texttt{interactivecomments} & 在交互式终端中允许使用 \texttt{\#} 注释 & 交互式终端不能注释，脚本中仍可注释 \\
 			\hline
 				\texttt{glob} & 启用 Glob (\texttt{man zshexpn}) & 禁用 Glob \\
 			\hline
-				\texttt{nomatch} & 对于无法匹配的 Glob 报错 & \parbox{162pt}{对于无法匹配的 Glob，直接原样返回 (建议开启这个，因为有些命令需要原样的 \texttt* 等字符，避免频繁打引号)} \\
+				\vbox to24pt{}\vtop to18pt{}\texttt{nomatch} & 对于无法匹配的 Glob 报错 & \parbox{162pt}{对于无法匹配的 Glob，直接原样返回 (建议开启这个，因为有些命令需要原样的 \texttt* 等字符，避免频繁打引号)} \\
 			\hline
 				\texttt{globdots} & Glob 中 \texttt* 匹配隐藏文件 & Glob 中 \texttt* 不匹配隐藏文件 \\
 			\hline
@@ -307,8 +311,6 @@ echo ${ANSWER} # 变量可见
 		\itemsep0pt
 		\item \texttt{cat}：输出并连接文件
 		\item \texttt{tee}：将输入复制一份 (标准输出和文件)
-		\item \texttt{split}：分裂文件 (用于制作分卷压缩包)
-		\item \texttt{dd}：拷贝文件的底层接口
 		\item \sout{\texttt{tac} / \texttt{rev}：花里胡哨地输出文件}
 		\item \texttt{stat}：显示文件信息
 		\item \texttt{wc}：统计行数等信息
@@ -323,6 +325,8 @@ echo ${ANSWER} # 变量可见
 		\item \texttt{less}：友好地展示文件内容 (允许手动滚屏)
 		\item \texttt{realpath}：显示经过解析的绝对路径 (所有符号链接均经过解析，从根目录开始)
 		\item \texttt{basename} / \texttt{dirname}：分离目录名和文件名
+		\item \danger\ \texttt{split}：分裂文件 (用于制作分卷压缩包)
+		\item \danger\ \texttt{dd}：拷贝文件的底层接口
 	\end{itemize}
 
 	\subsubsection[网络]{网络\protect\cite{lbwvssl}}
@@ -332,10 +336,10 @@ echo ${ANSWER} # 变量可见
 		\item \texttt{ifconfig} / \texttt{ip}：查询网络配置
 		\item \texttt{netstat}：查询连接情况
 		\item \texttt{ping}：检查网络是否连通
-		\item \texttt{tcpdump}：抓网络包
-		\item \texttt{nc}：手动发/听网络包
-		\item \texttt{dig} / \texttt{nslookup}：DNS 解析
-		\item \texttt{curl} / \texttt{wget}：网络下载
+		\item \texttt{curl} / \texttt{wget}：命令行网络 (HTTP 等协议) 连接
+		\item \danger\ \texttt{tcpdump}：抓网络包
+		\item \danger\ \texttt{nc}：手动发/听网络包
+		\item \danger\ \texttt{dig} / \texttt{nslookup}：DNS 解析
 	\end{itemize}
 
 	\subsubsection{其它}
@@ -344,6 +348,7 @@ echo ${ANSWER} # 变量可见
 		\itemsep0pt
 		\item \texttt{clear} 清屏
 		\item \texttt{history} 查询历史记录
+		\item \texttt{alias} / \texttt{unalias} 定义与取消定义别名
 		\item \texttt{tar} / \texttt{gzip} / \texttt{gunzip} / \texttt{zip} / \texttt{unzip}：各种不同格式的压缩工具
 		\item \texttt{shutdown} / \texttt{halt} / \texttt{reboot}：关机及重启
 		\item \texttt{date}：显示或更改系统时间
@@ -359,6 +364,276 @@ echo ${ANSWER} # 变量可见
 
 	\section{Git}
 
+	\subsection{Introduction}
+
+	在代码开发过程中，总会遇到一些问题。
+	代码不知道改了哪里不能运行了，想要回退怎么办？
+	多个人同时想对代码进行修改（并行开发），开发完后怎么合并？
+	显然，有一个能帮助我们解决这些问题的工具将极大的加快我们开发的速度。
+	而这种工具，便是版本控制软件。
+
+	版本控制软件帮助使用者找出：
+
+	\begin{itemize}
+		\itemsep0pt
+		\item 不同版本之间的差异；
+		\item 谁做出了这个修改；
+		\item 什么时候做出了这个修改；
+		\item 做出修改的人给出的修改理由。
+	\end{itemize}
+
+	那么，什么是分布式的版本控制软件呢？
+	为了了解清楚，我们需要区分中央版本控制系统 (CVCS) 和分布式版本控制系统 (DVCS) 的区别。
+
+	中央版本控制系统必须同时存在服务端和客户端。
+	当进行代码备份时，客户端会向服务端发出请求，并将此次修改的内容发送到服务器当中去，服务端收到请求后，会将代码存储在服务器当中；
+	同样当客户端想查看某一个版本的修改内容或者想恢复到某一个版本之时，客户端也会发送请求到服务端，服务在端接收到请求之后会做出相应的处理并返回给客户端。
+	也就是说，在业务流程过程中，服务端必须存在，所有请求必须经过服务端的处理。
+
+	分布式版本控制器，主要是将备份的代码以及记录完全独立在本地存储。
+	比如说当你想将代码恢复到某一个版本的时候，本地版本控制器不需要依赖网络便可以完成此操作，因为本地版本控制器拥有完整独立的一套控制系统。\cite{net9-git}
+
+	\noindent\hrulefill
+
+	Git 作为世界上最流行的 DVCS，占了开源市场版本控制系统约 $74 \%$ 的份额\footnote{\url{https://openhub.net/repositories/compare}, 2023.7.}，其余比较常见的有 svn (CVCS, $22 \%$, 代表者 texlive 等)，Mercurial (DVCS, $1 \%$, 代表者 nginx 等)。
+	而且，很多 DVCS 或多或少受到 Git 的影响 (如 Mercurial/hg 等)，因此学习 Git 也会对之后学其他 DVCS 带来遍历，这也是我们学 Git 的理由之一。
+
+	\subsubsection[什么是 Git]{什么是 Git\protect\cite{net9-git}}
+
+	Git 是 Linux 之父 Linus Torvalds 为开发 Linux 内核而建立的一个分布式版本控制软件。
+
+	Git 除了版本控制软件本身的优势以外，还可以：
+
+	\begin{itemize}
+		\itemsep0pt
+		\item 通过查看 Git history，开发者可以看到一个项目开发的时间线；
+		\item 通过 Git branch (分支)，开发者可以在不用担心影响主代码的情况下进行开发；
+		\item ……
+	\end{itemize}
+
+	\pagebreak
+
+	\subsection{课前准备}
+
+	Git 下载 (官网)：\url{https://git-scm.com/downloads}
+
+	Git-for-windows \cite{sast2021-git}：
+	\begin{itemize}
+		\itemsep0pt
+		\item \url{https://gitforwindows.org}
+		\item 国内镜像：\url{https://npm.taobao.org/mirrors/git-for-windows/}
+		\item 清华镜像：\url{https://mirrors.tuna.tsinghua.edu.cn/github-release/git-for-windows/git/}
+	\end{itemize}
+
+	Linux (一般自带，以 Ubuntu 为例)：\texttt{sudo apt install git}
+
+	Mac\,OS (一般自带)：\texttt{brew install git} 或 \url{https://sourceforge.net/projects/git-osx-installer/} \cite{sast2021-git}。
+
+	\subsection{学习资料}
+
+	网上的 Git 学习资料非常多，同学们需要善于寻找资源：
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \url{https://docs.net9.org/basic/git/}\quad\textcolor{red}{$\gets$ \textbf{务必熟读，其中的内容本文不再重复出现}}
+		\item \url{https://www.runoob.com/git/git-tutorial.html}
+		\item \url{https://www.liaoxuefeng.com/wiki/896043488029600}
+		\item \url{https://git-scm.com/book/zh/v2}
+		\item \url{https://learngitbranching.js.org/?locale=zh_CN}\quad\textcolor{maroon}{$\gets$ 学习 Git 分支原理一定要玩的小游戏！}
+		\item \url{https://github.com/b1f6c1c4/learn-git-the-super-hard-way}\quad\textcolor{maroon}{$\gets$ 学习 Git \textbf{底层原理}的好教程！}
+		\item \url{https://education.github.com/git-cheat-sheet-education.pdf}\quad\textcolor{maroon}{$\gets$ 一些重要命令的 cheat-sheet}
+	\end{itemize}
+
+	当遇到问题时，要善于利用 Bing、Google 等搜索引擎，以及 \href{https://stackoverflow.com/}{Stack Overflow}、\href{https://stackexchange.com/}{Stack Exchange} 等。当然在 2023 年的今天，ChatGPT/GPT-4 等工具也一直是你的好伙伴 (对于比较基础的问题效果还是很不错的)。
+
+	当然，在遇到不会的命令时，还要养成看文档的习惯，这一部分可以参考 \ref{sss:linuxdoc} 和 \hyperref[sss:gitdoc]{\ref*{sss:gitdoc} 节}。
+
+	\subsection{如何查文档}
+	\label{sss:gitdoc}
+
+	除搜索引擎/ChatGPT 等方式外，在 Git 中查文档主要有如下方式：
+	\begin{itemize}
+		\itemsep0pt
+		\item 官网：\url{https://git-scm.com/docs}，非常权威，可切换语言。
+		\item 以下三种方式等价，且内容和之前官网本质相同：
+			\begin{itemize}
+				\itemsep0pt
+				\item \texttt{git <command> --help}
+				\color{red}\item \texttt{git help <command>}\normalcolor
+				\item \texttt{man git-<command>}\footnote{和 \hyperref[sss:shell-syntax]{\ref*{sss:shell-syntax} 节}类似，所有手册页可通过 \texttt{ls /usr/share/man/man*/git*} 查询 (Linux)。}
+			\end{itemize}
+			为统一起见，下文均使用第二种规范。
+
+			特别地，除了命令外，git 还提供了其他重要的文档，比如 \texttt{git help revisions} 给出了 Git 中指定一个版本或范围的所有方法的详细文档。
+		\item \texttt{tldr git <command>}，见 \hyperref[sss:linuxdoc]{\ref*{sss:linuxdoc} 节}。
+	\end{itemize}
+
+	\subsection{Git 配置}
+	\label{sss:gitconfig}
+
+	\textcolor{properpurple}{[\textit{直冲官方版：\url{https://git-scm.com/docs/git-config/zh_HANS-CN} 或 \texttt{git help config}}]}
+
+	Git 配置根据作用域分为好几类，主要的三类从小到大见\autoref{table:gitconfigscope}。
+
+	\begin{table}[htb]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+				作用域 & 英文名 & 生效范围 & 存储地址 \\
+			\hline\hline
+				局部 & local & 该仓库 & \texttt{\textcolor{fuchsia}.\footnotemark/.git/config} \\
+			\hline
+				全局 & global & 本用户 & \verb!~/.gitconfig! \\
+			\hline
+				系统 & system & 整台计算机 & \texttt{/etc/gitconfig} (通常) \\
+			\hline
+		\end{tabular}
+		\caption{Git 配置的作用域}
+		\label{table:gitconfigscope}
+	\end{table}
+
+	显然可知，用户名，邮箱\sout{，GPG key} 等配置是关于用户的配置，应该选择全局，所以配置时应当带上 \texttt{--global}。
+
+	Git 的配置里包含很多好玩东西，比如\hyperref[sss:gitalias]{别名}等，在后面会介绍。
+
+	\subsection{工作区、暂存区和版本库}
+
+	\footnotetext{\texttt{\color{fuchsia}.} 指仓库所在目录。}\textcolor{maroon}{\textbf{补充：\texttt{git checkout} 自 Git 2.23 起不建议使用 (deprecated)，官方建议使用分工更明确地 \texttt{git switch} (切换分支，分离 HEAD) 和 \texttt{git restore} (恢复文件)。}}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{git status}：查看当前状态，并给出提示 (\textbf{\color{red}非常常用！很多时候 Git 的提示非常贴心，会告诉你相应状态和接下来应当做的操作})；
+		\item \texttt{git add}：工作区 (worktree) $\to$ 暂存区 (index/staged)
+		\item \texttt{git commit}：暂存区 (index/staged) $\to$ 版本库 (HEAD)
+		\item \texttt{git restore}：恢复文件
+		\item \texttt{git diff}：显示版本间变化
+	\end{itemize}
+
+	更新后的图：
+	\begin{figure}[htbp]
+		\centering
+		\begin{tikzpicture}
+			\definecolor{gitbgblue}{RGB}{174,194,218}
+			\useasboundingbox (-7.5, -3.5) rectangle (7.5, 3.5);
+			\node at (0, 0) {\includegraphics[scale=.6]{assets/git.png}};
+			% \draw[help lines] (-7.5, -3.5) grid (7.5, 3.5);
+			\node[fuchsia, fill=white] at (-3, 0.65) {\quad\texttt{restore \textcolor{gray}{[-W]}}\quad\ };
+			\node[fuchsia, fill=white] at (-3.1, -1) {\quad\ \texttt{restore -S -W}\ \quad\ };
+			\node[fuchsia, fill=gitbgblue] at (2.88, 0.69) {\texttt{restore -S}};
+		\end{tikzpicture}
+		\caption{Git 工作区、暂存区和版本库}
+	\end{figure}
+
+	\subsection{分支操作}
+
+	\textcolor{maroon}{\textbf{强烈建议从 \url{https://learngitbranching.js.org/?locale=zh_CN} 学习！}}
+
+	\textcolor{maroon}{\textbf{强烈建议从 \url{https://learngitbranching.js.org/?locale=zh_CN} 学习！}}
+
+	\textcolor{maroon}{\textbf{强烈建议从 \url{https://learngitbranching.js.org/?locale=zh_CN} 学习！}}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{git branch}：分支管理 (具体用法见 \texttt{git help branch})
+		\item \texttt{git switch}：切换分支 (比较常见的 \texttt{git switch -c}，创建并切换)
+		\item \texttt{git tag}：标签管理 (\url{https://www.liaoxuefeng.com/wiki/896043488029600/900788941487552})
+		\item \texttt{git log}：展示历史
+		\item \texttt{git show}：显示提交内容\footnote{冷知识：\texttt{git log} 和 \texttt{git show} 的底层实现是完全一致的，只是默认选项不同而已。}
+		\item \texttt{git diff}：显示版本间变化
+		\item \texttt{git merge}：冲突处理之合并 (见前述链接)
+		\item \texttt{git rebase}：冲突处理之变基 (见前述链接，其中 \texttt{git rebase -i} 较常用，可用于合并多个提交，简化版本树)
+	\end{itemize}
+
+	\subsection{远端操作}
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{git remote}：远端管理
+		\item \texttt{git clone}：克隆远端仓库
+		\item \texttt{git fetch}：收取远端变化
+		\item \texttt{git push}：推送变化到远端
+		\item \texttt{git pull}：\texttt{git fetch} + \texttt{git merge} (或 \texttt{git rebase})
+		\item \texttt{git submodule}：子模块管理
+	\end{itemize}
+
+	分支跟踪：见 \cite{sast2021-git-2} 或 \texttt{git help branch}。
+
+	\subsection{其他命令}
+
+	这里还有一些\sout{可能在 Puzzle 中用得到的}命令，具体方法请自行使用 \texttt{git help} (记住，他们真的是很好的老师，我已经没什么好写的了)。
+
+	\begin{itemize}
+		\itemsep0pt
+		\item \texttt{git blame}：查看贡献者 \sout{罪魁祸首 之 谁写的 bug}
+		\item \texttt{git shortlog}：统计不同用户的贡献 \sout{找出摆烂的队友}
+		\item \texttt{git reflog}：查询引用日志，用于误操作恢复
+		\item \texttt{git bisect}：在版本树上二分查找定位 bug
+		\item \danger\ \texttt{git gc} / \texttt{git prune} / \texttt{git fsck}：用于系统检查和垃圾清理
+	\end{itemize}
+
+	\subsection{Git 别名}
+	\label{sss:gitalias}
+
+	\textcolor{properpurple}{[\textit{直冲官方版：\url{https://git-scm.com/book/zh/v2/Git-\%E5\%9F\%BA\%E7\%A1\%80-Git-\%E5\%88\%AB\%E5\%90\%8D}}]}
+
+	相信大家也可以发现，在平常使用 Git 时，经常会打出一长串又臭又长的命令，此时 Git 别名可以使使你的 Git 体验更简单、容易、熟悉。
+
+	Git 的别名实际上就是节为 \texttt{alias} (键为 \texttt{alias.*}) 的配置，因此可以使用 \texttt{git config} 直接配置。由于 Git 别名通常给个人使用，因此配置时最好带上 \texttt{--global}。
+
+	在下发的服务器的 \verb!~/.gitconfig! 文件中就有一些被注释掉的别名配置 (这些是我使用的)，大家可以根据自己的需要定义别名。
+
+	\subsection{gitignore}
+
+	\textcolor{properpurple}{[\textit{直冲官方版：\url{https://git-scm.com/docs/gitignore} 或 \texttt{git help ignore}}]}
+
+	在平时的工作中，经常会出现一些垃圾文件，如 C++ 的 \texttt{.o}, \texttt{.exe}，LaTeX 的 \texttt{.log}, \texttt{.out}，Node.js 的 \texttt{node\_modules}，\sout{以及 Mac\,OS 的万恶之源\ \texttt{.DS\_Store}}。我们不希望这些 (可能很庞大) 的文件被 Git 跟踪 (或一不小心被加入暂存区甚至版本库)，我们需要通过 Git 提供的 ignore-list 规则来告诉 Git 不需要管理的文件。
+
+	简单地来说，你只需要在仓库的任意位置创建一个名为 \texttt{.gitignore} 的文件，然后一行写一个规则，使得满足这个规则的文件不被考虑。这样，你就可以放心使用 \texttt{git add .} 而不用担心加入奇奇怪怪的文件了。\cite{sast2021-git-2}
+
+	.gitignore 文件的具体语法见 \url{https://git-scm.com/docs/gitignore#_pattern_format}。
+
+	\begin{minted}[frame=single,linenos=true,rulecolor=blue,escapeinside=||]{shell}
+# 忽略 folder 下的全部内容，这包括根目录下的 /folder/，也包括某个子目录下的 /child/folder/ 内容：
+folder/*
+# 忽略根目录下的 /folder/ 下的全部内容：
+/folder/*
+# 忽略所有 .cpp 文件：
+*.cpp
+# (尽管忽略所有 .cpp 文件，但) 不过滤 special.cpp 文件：
+!special.cpp
+	\end{minted}
+
+	\danger\ 扩展：.gitignore 虽然能 ignore 掉一些文件，但其本身还是会被 Git 跟踪。有些时候你\sout{可能因为独特的环境}导致
+
+	\hskip1.75em 产生一些只有你的工作区才有的脏东西，那么你不希望将它们添加到\ .gitignore 里。显然你不能把\ .gitignore 自己给 ignore 掉。此时，对于这一类文件，可以在 \texttt{\textcolor{fuchsia}./.git/info/exclude} 里填写，语法和\ .gitignore 相同。与 \hyperref[sss:gitconfig]{Git 配置}类似，它也有全局 (用户) 版本：\verb!~/.config/git/ignore!。
+
+	\subsection[不通过 GitHub 直接交流]{\danger\ 不通过 GitHub 直接交流}
+
+	一个常见的需求是你在写项目的时候需要和给你的分配某个服务器同步，然后本地写代码 (编辑起来比 Remote-SSH 快) 在服务器上调试运行 (有特定环境，有算力等)。
+
+	此时一个常见的方法是通过 GitHub 去同步。但是这样就变成了中心化的方式，没有充分利用 Git 作为 DVCS 的优势。而 \texttt{rsync} 在这一方面又显得比较笨重，比如在增量更新，分支切换等方面。
+
+	其实，\textbf{当你可以 SSH 一个服务器的时候，你就可以把它当成一个 SSH 协议的 Git 服务器！}具体操作如下 (假设你 SSH 使用的命令为 \texttt{ssh user@hostname}，有端口的情况通过 \texttt{.ssh/config} 去掉)：
+
+	\begin{itemize}
+		\itemsep0pt
+		\item 设\textbf{远端}的仓库地址为 \texttt{/path/to/repository}，建立一个空仓库或原仓库的副本 (第一次操作)；
+		\item 在\textbf{远端}的局部 (仓库) 配置上 \texttt{receive.denyCurrentBranch} 值为 \texttt{updateInstead} (\texttt{git help config} / \texttt{git help hooks})；
+		\item 然后在你\textbf{本地}的仓库中配置 \texttt{git remote add <name> user@hostname:/path/to/repository/.git}；
+		\item 这样就可以愉快地 \texttt{fetch}/\texttt{push} 啦！
+	\end{itemize}
+
+	\subsection{其他技巧}
+
+	Git 还有很多小技巧，限于篇幅原因这里不一一介绍，有兴趣的同学可以查阅相关资料自行学习。
+
+	\begin{itemize}
+		\itemsep0pt
+		\item Git LFS：用于管理大文件，如模型、数据等。\url{https://git-lfs.com/}
+		\item 提交签名：给你的 Git 提交签名，这样你的提交就会旁边就会有 \textcolor{green!80!black}{Verified} 字样，防止别人伪造。\url{https://docs.github.com/zh/authentication/managing-commit-signature-verification}
+		\item Github Action：CI/CD 的好帮手，减轻人类的负担。
+	\end{itemize}
+
 	\section[实战]{$\overset{\text{zu\`o\vphantom y}}{\text{实}}\overset{\text{y\`e}}{\text{战}}$}
 
 	\subsection{服务器连接}
@@ -368,7 +643,7 @@ echo ${ANSWER} # 变量可见
 
 	我们会按照报名问卷的填写情况为大家分配服务器账号，在获取到你的服务器用户名、IP 地址与账号后，请使用以下命令连接到服务器：
 
-	\begin{minted}[frame=single,linenos=true,rulecolor=blue]{shell}
+	\begin{minted}[frame=single,linenos=true,rulecolor=blue,escapeinside=||]{shell}
 ssh train@59.66.131.240 -p <port>
 	\end{minted}
 
@@ -383,7 +658,7 @@ ssh train@59.66.131.240 -p <port>
 	\begin{itemize}
 		\itemsep0pt
 		\item (在本地) 直接输入命令 \texttt{ssh-keygen} (注：可选参数 \texttt{-t ed25519}，更多参数见命令手册)，会在家目录的 \texttt{.ssh} 文件夹下生成一对公私钥 (\verb!id_rsa.pub! 和 \verb!id_rsa!)。
-		\item (在本地) 运行 \texttt{ssh-copy-id train@59.66.131.240 -p <port>} (格式和 \ref{sss:connserver} 相同，更多参数见命令手册)，输入密码后即可完成 ``免密登录'' 配置。
+		\item (在本地) 运行 \texttt{ssh-copy-id train@59.66.131.240 -p <port>} (格式和 \hyperref[sss:connserver]{\ref*{sss:connserver} 节}相同，更多参数见命令手册)，输入密码后即可完成 ``免密登录'' 配置。
 	\end{itemize}
 
 	\subsubsection{撤销密码登录 (可选)}
@@ -400,7 +675,7 @@ ssh train@59.66.131.240 -p <port>
 
 	\subsection{CTF --- 简介}
 
-	为保证趣味性，我们沿用之前几届的传统，采用 CTF (\href{https://en.wikipedia.org/wiki/Capture_the_flag_(cybersecurity)}{Capture the Flag}) 的形式进行。你需要在服务器环境中寻找格式形如 \textcolor{fuchsia}{\texttt{sast2023\{*******\}}} 的字符串，其中 \texttt{*******} 可以包含任何非空白 ASCII 可见字符。我们将这种字符串称为 ``flag''。每当你找到一个 ``flag''。你就可以通过 \ref{sss:ctfsubmit} 中介绍的提交方式进行提交。\cite{sast2022-linux}
+	为保证趣味性，我们沿用之前几届的传统，采用 CTF (\href{https://en.wikipedia.org/wiki/Capture_the_flag_(cybersecurity)}{Capture the Flag}) 的形式进行。你需要在服务器环境中寻找格式形如 \textcolor{fuchsia}{\texttt{sast2023\{*******\}}} 的字符串，其中 \texttt{*******} 可以包含任何非空白 ASCII 可见字符。我们将这种字符串称为 ``flag''。每当你找到一个 ``flag''。你就可以通过 \hyperref[sss:ctfsubmit]{\ref*{sss:ctfsubmit} 节}中介绍的提交方式进行提交。\cite{sast2022-linux}
 
 	\subsection{CTF --- 提交方式}
 	\label{sss:ctfsubmit}
