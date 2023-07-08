@@ -28,6 +28,8 @@ export interface ResultRow {
 	score: number;
 	/** Latest submit time. */
 	latest: number;
+	/** Total score and latest submit time for each category. */
+	categoryInfo: { score: number, latest: number }[];
 }
 
 export interface LeaderBoard {

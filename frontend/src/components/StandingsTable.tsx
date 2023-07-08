@@ -23,7 +23,13 @@ const SORT_BY_PART_n: (n: number) => SortFunction = (n: number) => (x: ResultRow
 	const l = x.state[n] ?? Infinity, r = y.state[n] ?? Infinity;
 	return l === r ? x.id < y.id : l < r;
 }
-const SORT_BY_PART: SortFunction[] = [];
+const SORT_BY_CPART_n: (n: number) => SortFunction = (n: number) => (x: ResultRow, y: ResultRow) => {
+	const l = x.categoryInfo[n], r = y.categoryInfo[n];
+	if (l.score !== r.score) return l.score > r.score;
+	if (l.latest !== r.latest) return l.latest < r.latest;
+	return x.id < y.id;
+}
+const SORT_BY_PART: SortFunction[] = [], SORT_BY_CPART: SortFunction[] = [];
 function doSort(rows: ResultRow[], compare: SortFunction, reverse: boolean): ResultRow[] {
 	return rows.sort(
 		(x, y) =>
@@ -42,9 +48,12 @@ const StandingsTable: React.FC<StandingsTableProps> = props => {
 
 	useEffect(() => {
 		const rows = [...(props.board?.data ?? [])];
-		if (props.board)
+		if (props.board) {
 			for (; SORT_BY_PART.length < props.board.flags.length;)
 				SORT_BY_PART.push(SORT_BY_PART_n(SORT_BY_PART.length));
+			for (; SORT_BY_CPART.length < props.board.categories.length;)
+				SORT_BY_CPART.push(SORT_BY_CPART_n(SORT_BY_CPART.length));
+		}
 		setRows(doSort(rows, sortFunction[0], sortReverse));
 	}, [props.board]);
 
@@ -88,7 +97,14 @@ const StandingsTable: React.FC<StandingsTableProps> = props => {
 							</Table.HeaderCell>
 							{
 								props.board?.categories.map(({ name, flags }, idx) =>
-									<Table.HeaderCell key={idx} colSpan={flags.length}>{name}</Table.HeaderCell>
+									<Table.HeaderCell
+										key={idx}
+										colSpan={flags.length}
+										sorted={sortFunction[0] === SORT_BY_CPART[idx] ? (sortReverse ? 'ascending' : 'descending') : undefined}
+										onClick={() => handleSort(SORT_BY_CPART[idx])}
+									>
+										{name}
+									</Table.HeaderCell>
 								)
 							}
 						</Table.Row>
