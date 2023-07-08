@@ -107,7 +107,7 @@
 	},
 	{
 		"name": "Bonus 1",
-		"flag": "c7w&abmfy&cmh&icera_tql",
+		"flag": "c7w_abmfy_cmh_icera_tql",
 		"score": 1,
 		"category": "Bonus",
 		"comment": "根据去年的经验（雾），将 classification 任务中所得到的 bonus1.png 通过 scp 拷贝到本地，观察图片 (表情包) 即可得到 flag。"
