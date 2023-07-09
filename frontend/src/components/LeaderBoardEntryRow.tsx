@@ -15,11 +15,7 @@ const LeaderBoardEntryRow: React.FC<LeaderBoardEntryRowProps> = props => {
 	return (
 		<Table.Row>
 			<Table.Cell>{props.idx + 1}</Table.Cell>
-			<Table.Cell>
-				{props.row.id}
-				<br />
-				<span className="prompt">{props.row.name}</span>
-			</Table.Cell>
+			<Table.Cell>{props.row.name}</Table.Cell>
 			<Table.Cell>
 				<ProgressGradient
 					content={props.row.score.toString()}

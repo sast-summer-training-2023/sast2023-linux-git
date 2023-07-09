@@ -13,21 +13,21 @@ interface StandingsTableProps {
 }
 
 type SortFunction = (x: ResultRow, y: ResultRow) => boolean;
-const SORT_BY_ID: SortFunction = (x: ResultRow, y: ResultRow) => x.id < y.id;
+const SORT_BY_ID: SortFunction = (x: ResultRow, y: ResultRow) => x.name < y.name;
 const SORT_BY_SCORE: SortFunction = (x: ResultRow, y: ResultRow) => {
 	if (x.score !== y.score) return x.score > y.score;
 	if (x.latest !== y.latest) return x.latest < y.latest;
-	return x.id < y.id;
+	return x.name < y.name;
 }
 const SORT_BY_PART_n: (n: number) => SortFunction = (n: number) => (x: ResultRow, y: ResultRow) => {
 	const l = x.state[n] ?? Infinity, r = y.state[n] ?? Infinity;
-	return l === r ? x.id < y.id : l < r;
+	return l === r ? x.name < y.name : l < r;
 }
 const SORT_BY_CPART_n: (n: number) => SortFunction = (n: number) => (x: ResultRow, y: ResultRow) => {
 	const l = x.categoryInfo[n], r = y.categoryInfo[n];
 	if (l.score !== r.score) return l.score > r.score;
 	if (l.latest !== r.latest) return l.latest < r.latest;
-	return x.id < y.id;
+	return x.name < y.name;
 }
 const SORT_BY_PART: SortFunction[] = [], SORT_BY_CPART: SortFunction[] = [];
 function doSort(rows: ResultRow[], compare: SortFunction, reverse: boolean): ResultRow[] {

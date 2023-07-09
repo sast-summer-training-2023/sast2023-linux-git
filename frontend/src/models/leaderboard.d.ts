@@ -18,7 +18,7 @@ export interface FlagInfo {
 
 export interface ResultRow {
 	/** Student id. */
-	id: number;
+	// id: number;
 	/** Student name. */
 	name: string;
 	/** `null` denotes not achieved yet, a number denotes the achievement time. */

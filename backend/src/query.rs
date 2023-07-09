@@ -8,6 +8,7 @@ use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct ResultRow {
+    #[serde(skip_serializing)]
     pub id: u32,
     pub name: String,
     pub state: Vec<Option<u64>>,
